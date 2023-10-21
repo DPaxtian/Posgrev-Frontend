@@ -6,7 +6,7 @@
 .lado-izquierdo {
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url('../login_background.jpg');
+    background-image: url('../images/login_background.jpg');
     height: 100vh;
     min-height: 500px;
 }

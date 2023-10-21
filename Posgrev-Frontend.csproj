@@ -7,4 +7,9 @@
     <RootNamespace>Posgrev_Frontend</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Logic\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
