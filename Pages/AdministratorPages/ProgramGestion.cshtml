@@ -1,0 +1,127 @@
+@page
+@model Posgrev_Frontend.Pages.AdministratorPages.ProgramGestionModel
+@{
+    ViewData["Title"] = "Posgrev - Crear Programa";
+}
+
+<style>
+    .form-control{
+        border-color: grey;
+    }
+</style>
+
+<body>
+    <div class="container mt-1">
+        <div>
+            <form id="routine-form" method="post">
+                <div class="d-flex mt-4">
+                    <h4>Crear programa de posgrado</h4>
+                </div>
+
+                <div>
+                    <h5 class="fw-light mt-4">Nombre del programa</h5>
+                    <input type="text" name="NombrePrograma" class="form-control" id="inputRoutineTitle"
+                        placeholder="Ej: Doctorado en ciencias agropecuarias" required>
+
+                    <div class="d-flex">
+                        <h5 class="mt-4 me-3 col-6 fw-light">Clave DGP</h5>
+                        <h5 class="mt-4 col-6 fw-light">Clave Programa</h5>
+                    </div>
+                    <div class="d-flex">
+                        <input type="text" name="ClaveDGP" class="form-control me-4" id="inputRoutineCity"
+                            placeholder="Ej: 311612" required>
+                        <input type="text" name="ClavePrograma" class="form-control" id="inputRoutineCountry"
+                            placeholder="DCAG-13-E" required>
+                    </div>
+
+                    <div class="d-flex">
+                        <h5 class="mt-4 me-3 col-6 fw-light">Nivel</h5>
+                        <h5 class="mt-4 col-6 fw-light">Región</h5>
+                    </div>
+                    <div class="d-flex">
+                        <select class="form-select me-4" name="Nivel" id="inputLevel" required>
+                            <option selected disabled value="">Seleccione una opción</option>
+                            <option value="Diplomado de Especializacion">Diploma de Especialización</option>
+                            <option value="Título de Grado de Maestro">Título de Grado de Maestro o Maestra</option>
+                            <option value="Título de Grado de Doctor">Título de Grado de Doctor o Doctora</option>
+                        </select>
+
+                        <select class="form-select" name="Region" id="inputRegion" required>
+                            <option selected disabled value="">Seleccione una opción</option>
+                            <option value="Xalapa">Xalapa</option>
+                            <option value="Cordoba-Orizaba">Cordoba-Orizaba</option>
+                            <option value="Veracruz">Veracruz</option>
+                            <option value="Coatzacoalcos">Coatzacoalcos</option>
+                            <option value="Poza Rica">Poza Rica</option>
+                        </select>
+                    </div>
+                    
+                    <h5 class="fw-light mt-4">Area</h5>
+                    <input type="text" name="Area" class="form-control" id="inputArea"
+                        placeholder="Ej: BIOLÓGICO - AGROPECUARIA" required>
+
+                    <div class="d-flex">
+                        <h5 class="mt-4 me-3 col-6 fw-light">No. Depedencia</h5>
+                        <h5 class="mt-4 col-6 fw-light">Año del programa</h5>
+                    </div>
+                    <div class="d-flex">
+                        <input type="text" name="NumDependencia" class="form-control me-4" id="inputRoutineCity"
+                            placeholder="Ej: 311612" required>
+                        <input type="text" name="AnioPrograma" class="form-control" id="inputRoutineCountry"
+                            placeholder="Ej: 2022" required>
+                    </div>
+
+                    <h5 class="fw-light mt-4">Nombre del coordinador</h5>
+                    <input type="text" name="NombreCoordinador" class="form-control" id="inputCordinatorName"
+                        placeholder="Nombre completo" required>
+
+                    <h5 class="fw-light mt-4">Correo institucional del coordinador</h5>
+                    <input type="text" name="CorreoCoordinador" class="form-control" id="inputCordinatorEmail"
+                        placeholder="Ej: correo@uv.mx" required>
+
+                    <div class="d-flex mt-5">
+
+                        <div class="col-9"></div>
+                        <button type="button" class="btn btn-secondary me-2 mb-4" data-bs-toggle="modal"
+                            data-bs-target="#cancelModal">
+                            Cancelar
+                        </button>
+
+                        <button type="submit" class="btn btn-primary shadow mb-4" style="width: 250px;">
+                            Crear Posgrado
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+
+<div class="modal fade" id="cancelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">¿Cancelar creación de programa?</h1>
+            </div>
+            <div class="modal-body">
+                <p class="fw-light">¿Desea cancelar la creación del programa de posgrado? Los datos ingresados se perderan</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="navigateToHome()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    const navigateToHome = () => {
+        var url = "/AdministratorPages/AdministratorPrograms";
+        window.location.href = url;
+    }
+</script>
+

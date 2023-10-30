@@ -16,3 +16,7 @@ html {
   position: relative;
   min-height: 100%;
 }
+
+*{
+  font-family: 'Gill Sans', sans-serif;
+}

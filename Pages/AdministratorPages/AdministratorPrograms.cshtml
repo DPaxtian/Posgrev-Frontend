@@ -1,0 +1,88 @@
+@page
+@model Posgrev_Frontend.Pages.AdministratorPages.AdministratorProgramsModel
+@{
+    ViewData["Title"] = "Posgrev - Administrar Programas";
+}
+
+<style>
+    .card{
+        cursor: pointer;
+        
+        border-radius: 10px;
+        
+    }
+
+    .card-body{
+      border-color: grey;
+    }
+
+    .navbar{
+        background-color: #18529D;
+    }
+
+    .nav-link{
+        color: white;
+    }
+</style>
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/AdministratorPages/AdministratorPrograms">Posgrados</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Usuarios</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<button type="button" class="btn btn-primary mt-3 ms-3" onclick="navigateToCreateProgram()">
+    Nuevo Programa de Posgrado
+</button>
+
+<div class="container-fluid mt-3" id="programCard">
+
+    @foreach (var program in Model.activePrograms)
+    {
+        <div class="card mt-2 mb-2" >
+            <div class="card-body" >
+                <div class="d-flex">
+                    <h5 class="card-title col-11"> @program.InformacionBasica.NombrePrograma </h5>
+                    <button type="button" class="btn btn-outline-primary">Editar</button>
+                </div>
+                <div class="d-flex">
+                  <span class="me-4">Area: @program.InformacionBasica.Area</span>
+                  <span class="me-4">Nivel: @program.InformacionBasica.Nivel</span>
+                  <span class="me-4">Región: @program.InformacionBasica.Region</span>
+                  <span>Año del Programa: @program.InformacionBasica.AnioPrograma</span>
+                </div>
+                
+                <div class="d-flex">
+                    <span class="me-4 mt-1">Clave del Programa: @program.InformacionBasica.ClavePrograma </span>
+                    <span class="mt-1">Clave DGP: @program.InformacionBasica.ClaveDGP</span>
+                </div>
+                <span class="mt-1">Coordinador: @program.InformacionBasica.NombreCoordinador</span>
+                <br>
+                <span class="mt-1">Correo del Coordinador: @program.InformacionBasica.CorreoCoordinador</span>
+                <br>                
+            </div>
+        </div>
+    }
+
+</div>
+
+<script>
+    const navigateToCreateProgram = () => {
+        var url = "/AdministratorPages/ProgramGestion";
+        window.location.href = url;
+    }
+</script>
