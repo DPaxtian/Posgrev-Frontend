@@ -58,9 +58,7 @@ namespace Posgrev_Frontend.Logic
                     informacionBasica = information
                 };
 
-
                 string dataToSend = JsonConvert.SerializeObject(data);
-                Console.WriteLine(dataToSend);
 
                 HttpClient server = new HttpClient();
                 string url = "http://localhost:3000/createProgram";
@@ -80,6 +78,78 @@ namespace Posgrev_Frontend.Logic
             return statusCode;
         }
 
+
+        public static async Task<int> EditProgram(ProgramModel editedInformation)
+        {
+            int statusCode = 500;
+
+            try
+            {
+                var information = new
+                {
+                    nombrePrograma = editedInformation.InformacionBasica.NombrePrograma,
+                    claveDGP = editedInformation.InformacionBasica.ClaveDGP,
+                    nivel = editedInformation.InformacionBasica.Nivel,
+                    clavePrograma = editedInformation.InformacionBasica.ClavePrograma,
+                    region = editedInformation.InformacionBasica.Region,
+                    area = editedInformation.InformacionBasica.Area,
+                    numDependencia = editedInformation.InformacionBasica.NumDependencia,
+                    correoCoordinador = editedInformation.InformacionBasica.CorreoCoordinador,
+                    nombreCoordinador = editedInformation.InformacionBasica.NombreCoordinador,
+                    anioPrograma = editedInformation.InformacionBasica.AnioPrograma
+                };
+
+                var data = new {
+                    activo = editedInformation.Activo,
+                    informacionBasica = information
+                };
+
+                string dataToSend = JsonConvert.SerializeObject(data);
+
+                HttpClient server = new HttpClient();
+                string url = "http://localhost:3000/modifyProgram/" + editedInformation.IdentificadorPrograma;
+                HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await server.PutAsync(url, contentToSend);
+
+                if(responseMessage.IsSuccessStatusCode)
+                {
+                    statusCode = 200;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("There was an error editing the program" + ex);
+            }
+
+            return statusCode;
+        }
+
+
+
+        public static async Task<ProgramModel> GetProgramDetails(string idProgram)
+        {
+            ProgramModel programObtained = null;
+
+            try
+            {
+                HttpClient server = new HttpClient();
+                string url = "http://localhost:3000/getProgramDetails/" + idProgram;
+                HttpResponseMessage message = await server.GetAsync(url);
+                string jsonResponse = await message.Content.ReadAsStringAsync();
+
+                if(message.IsSuccessStatusCode)
+                {
+                    ApiResponseProgramDetails programDescerialized = JsonConvert.DeserializeObject<ApiResponseProgramDetails>(jsonResponse);
+                    programObtained = programDescerialized.Program;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("There is an error at GetProgramDetails" + ex);
+            }
+
+            return programObtained;
+        }
 
     }
 }

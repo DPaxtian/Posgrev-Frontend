@@ -1,0 +1,128 @@
+@page
+@model Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators.ContextProgramModel
+@{
+    ViewData["Title"] = "Compromiso - Posgrev";
+}
+
+<style>
+    .navbar {
+        background-color: #18529D;
+    }
+
+    .nav-link {
+        color: white;
+    }
+
+    .page-item {
+        width: 1000px;
+    }
+
+    a {
+        text-align: center;
+    }
+
+    .page-link {
+        background-color: #28AD56;
+        color: white;
+    }
+
+    p {
+        font-weight: bold;
+        font-size: smaller;
+        height: 0.75rem;
+    }
+
+    span {
+        font-weight: lighter;
+        font-size: smaller;
+        height: 0.75rem;
+        padding: 1rem;
+    }
+
+    h6 {
+        font-weight: lighter;
+        font-size: small;
+    }
+</style>
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page"
+                        href="/CoordinatorPages/CoordinatorHome">Evaluaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Resultados</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container-fluid">
+    <div class="container mt-4">
+        <h5>Evaluación del Posgrado</h5>
+
+        <div class="mt-4">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link"
+                            href="/CoordinatorPages/ProgramIndicators/GeneralData">Datos Generales</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">Compromiso</a></li>
+                    <li class="page-item"><a class="page-link"
+                            href="/CoordinatorPages/ProgramIndicators/ProgramStructure">Infraestructura</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Procesos Escolares</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Información del Estudiante</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Resultados</a></li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <form class="mt-5 shadow" id="generalData" method="post">
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Compromiso y responsabilidad social del programa educativo de posgrado:</p>
+                <h6 class="ms-3 mb-3">Documento que contenga una descripción sobre los siguientes puntos. <br>
+                    • Compromisos sociales del programa educativo de posgrado con la comunidad. <br>
+                    • Presupuesto para actividades académicas y/o vinculación. <br>
+                    • Procedimientos colegiados para la solución de controversias que surjan al interior de la comunidad
+                    académica del programa. <br>
+                    • Compromiso para la atención a casos de violencia de género, teniendo como principios la debida
+                    diligencia, la confidencialidad, la transparencia y accesibilidad.
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Vinculación con los sectores de la sociedad:</p>
+                <h6 class="ms-3 mb-3">
+                    Documento que contenga una descripción de los siguientes puntos: <br>
+                    • Actividades de colaboración más relevantes que tiene el programa educativo de posgrado con los
+                    sectores de la sociedad. <br>
+                    • Acuerdos de colaboración con los sectores de la sociedad.
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Actividades de retribución social:</p>
+                <h6 class="ms-3 mb-3">
+                    Tabla en Excel con la siguiente información: <br>
+                    • Nombre alumno <br>
+                    • Matrícula <br>
+                    • Tipo de actividades que realiza el alumno becado y que se relacionen con la retribución social,
+                    que promuevan el acceso universal al conocimiento científico y sus beneficios sociales.
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+        </form>
+
+    </div>
+</div>

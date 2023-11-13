@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Posgrev_Frontend.Models
 {
@@ -11,14 +12,17 @@ namespace Posgrev_Frontend.Models
         [JsonProperty("datosGenerales")]
         public DatosGenerales? DatosGenerales { get; set; }
 
+        [JsonProperty("compromiso")]
+        public Compromiso? Compromiso {get; set;}
+
         [JsonProperty("infraestructuraPrograma")]
         public InfraestructuraPrograma? InfraestructuraPrograma { get; set; }
 
         [JsonProperty("procesosEscolares")]
         public ProcesosEscolares? ProcesosEscolares { get; set; }
 
-        [JsonProperty("pertinencia")]
-        public Pertinencia? Pertinencia { get; set; }
+        [JsonProperty("informacionSeguimientto")]
+        public InformacionSeguimiento? InformacionSeguimiento {get; set;}
 
         [JsonProperty("resultados")]
         public Resultados? Resultados { get; set; }
@@ -37,6 +41,19 @@ namespace Posgrev_Frontend.Models
     }
 
 
+    public partial class Compromiso
+    {
+        [JsonProperty("compromisoPosgrado")]
+        public string? CompromisoPosgrado {get; set;}
+
+        [JsonProperty("vinculacion")]
+        public string? Vinculacion {get; set;}
+
+        [JsonProperty("actividadesRetribucion")]
+        public string? ActividadesRetribucion {get; set;}
+    }
+
+
     public partial class Adsreg
     {
         [JsonProperty("adscripcion")]
@@ -48,9 +65,6 @@ namespace Posgrev_Frontend.Models
 
     public partial class Antecedentes
     {
-        [JsonProperty("fechaCreacion")]
-        public string? FechaCreacion { get; set; }
-
         [JsonProperty("fechaAprobacion")]
         public string? FechaAprobacion { get; set; }
 
@@ -84,8 +98,20 @@ namespace Posgrev_Frontend.Models
         [JsonProperty("registroProfesiones")]
         public string? RegistroProfesiones { get; set; }
 
-        [JsonProperty("compromiso")]
-        public string? Compromiso { get; set; }
+        [JsonProperty("duracion")]
+        public string? Duracion {get; set;}
+
+        [JsonProperty("periodosLectivos")]
+        public string? PeriodosLectivos {get; set;}
+
+        [JsonProperty("periodicidadConvocatoria")]
+        public string? PeriodicidadConvocatoria {get; set;}
+
+        [JsonProperty("cuotaRecuperacion")]
+        public string? CuotaRecuperacion {get; set;}
+
+        [JsonProperty("pronaces")]
+        public List<string>? Pronaces {get; set;}
     }
 
     public partial class InformacionBasica
@@ -123,14 +149,14 @@ namespace Posgrev_Frontend.Models
 
     public partial class InfraestructuraPrograma
     {
-        [JsonProperty("planEstudiosActualizado")]
-        public PlanEstudiosActualizado? PlanEstudiosActualizado { get; set; }
-
         [JsonProperty("nucleoAcadBas")]
         public NucleoAcadBas? NucleoAcadBas { get; set; }
 
         [JsonProperty("planEstudios")]
         public string? PlanEstudios { get; set; }
+
+        [JsonProperty("cambiosPlan")]
+        public string? CambiosPlan {get; set;}
 
         [JsonProperty("mapaCurricular")]
         public string? MapaCurricular { get; set; }
@@ -141,17 +167,112 @@ namespace Posgrev_Frontend.Models
         [JsonProperty("infraestructuraPrograma")]
         public string? InfraestrucPrograma { get; set; }
 
-        [JsonProperty("ejercicioFinanciero")]
-        public string? EjercicioFinanciero { get; set; }
+        [JsonProperty("actaConsejoConsultivo")]
+        public string? ActaConsejoConsultivo {get; set;}
 
-        [JsonProperty("duracionPrograma")]
-        public string? DuracionPrograma { get; set; }
+        [JsonProperty("actaConsejoArea")]
+        public string? ActaConsejoArea {get; set;}
 
-        [JsonProperty("periodosLectivos")]
-        public string? PeriodosLectivos { get; set; }
+        [JsonProperty("actaActualizacionPlan")]
+        public string? ActaActualizacionPlan {get; set;}
 
-        [JsonProperty("periodicidadNuevIngre")]
-        public string? PeriodicidadNuevIngre { get; set; }
+        [JsonProperty("fechaActualizacionPlan")]
+        public DateTime? FechaActualizacionPlan {get; set;}
+    }
+
+
+    public partial class InformacionSeguimiento
+    {
+        [JsonProperty("demanda")]
+        public Demanda? Demanda {get; set;}
+
+        [JsonProperty("aspirantesSeleccionados")]
+        public AspirantesSeleccionados? AspirantesSeleccionados {get; set;}
+
+        [JsonProperty("tasaTitulacion")]
+        public TasaTitulacion? TasaTitulacion {get; set;}
+
+        [JsonProperty("tasaTerminal")]
+        public TasaTerminal? TasaTerminal {get; set;}
+
+        [JsonProperty("estrategiasAntiplagio")]
+        public string? EstrategiasAntiplagio { get; set; }
+
+        [JsonProperty("estudioFactibilidad")]
+        public string? EstudioFactibilidad {get; set;}
+
+        [JsonProperty("movilidadEstudiantil")]
+        public string? MovilidadEstudiantil {get; set;}
+
+        [JsonProperty("apoyoCondonacion")]
+        public string? ApoyoCondonacion {get; set;}
+
+        [JsonProperty("becasEstudiantiles")]
+        public string? BecasEstudiantiles {get; set;}
+
+        [JsonProperty("bajasEstudiantiles")]
+        public string? BajasEstudiantiles {get; set;}
+
+        [JsonProperty("colabSecSoc")]
+        public string? ColabSecSoc {get; set;}
+
+        [JsonProperty("cuotaRecuperacionGeneracion")]
+        public string? CuotaRecuperacionGeneracion {get; set;}
+
+        [JsonProperty("redEgresados")]
+        public string? RedEgresados {get; set;}
+
+        [JsonProperty("direccionLgac")]
+        public string? DireccionLgac {get; set;}
+
+        [JsonProperty("direccionTesis")]
+        public string? DireccionTesis {get; set;}
+
+        [JsonProperty("tutoriasProfEst")]
+        public string? TutoriasProfEst {get; set;}
+
+        [JsonProperty("comiteGraduacion")]
+        public string? ComiteGraduacion {get; set;}
+    }
+
+
+    public partial class Demanda
+    {
+        [JsonProperty("totalAspirantes")]
+        public int? TotalAspirantes {get; set;}
+
+        [JsonProperty("informacionAspirantes")]
+        public string? InformacionAspirantes {get; set;}
+    }
+
+
+    public partial class AspirantesSeleccionados
+    {
+        [JsonProperty("numAspirantesSeleccionados")]
+        public int? NumAspirantesSeleccionados {get; set;}
+
+        [JsonProperty("informacionAspirantesSeleccionados")]
+        public string? InformacionAspirantesSeleccionados {get; set;}
+    }
+
+
+    public partial class TasaTitulacion
+    {
+        [JsonProperty("porcentajetasaTitulacion")]
+        public string? PorcentajeTasaTitulacion {get; set;}
+
+        [JsonProperty("informacionTitulados")]
+        public string? InformacionTitulados {get; set;}
+    }
+
+
+    public partial class TasaTerminal
+    {
+        [JsonProperty("tasaEficienciaTerminal")]
+        public string? TasaEficienciaTerminal {get; set;}
+
+        [JsonProperty("analisisEficienciaTerminal")]
+        public string? AnalisisEficienciaTerminal {get; set;}
     }
 
     public partial class NucleoAcadBas
@@ -169,92 +290,41 @@ namespace Posgrev_Frontend.Models
         public string? InfoProf { get; set; }
     }
 
-    public partial class Pertinencia
-    {
-        [JsonProperty("estudioFactibilidad")]
-        public string? EstudioFactibilidad { get; set; }
-
-        [JsonProperty("redEgresados")]
-        public string? RedEgresados { get; set; }
-
-        [JsonProperty("colabSecSoc")]
-        public string? ColabSecSoc { get; set; }
-
-        [JsonProperty("tasaTerminar")]
-        public string? TasaTerminar { get; set; }
-    }
-
-    public partial class PlanEstudiosActualizado
-    {
-        [JsonProperty("fechaAprob")]
-        public string? FechaAprob { get; set; }
-
-        [JsonProperty("acta")]
-        public string? Acta { get; set; }
-    }
 
     public partial class ProcesosEscolares
     {
-        [JsonProperty("procesoAdmin")]
-        public string? ProcesoAdmin { get; set; }
+        [JsonProperty("procesoAdmision")]
+        public string? ProcesoAdmision { get; set; }
 
-        [JsonProperty("adminEscolar")]
-        public string? AdminEscolar { get; set; }
+        [JsonProperty("procesoMovilidad")]
+        public string? ProcesoMovilidad {get; set;}
+
+        [JsonProperty("procesoCondonacion")]
+        public string? ProcesoCondonacion {get; set;}
+
+        [JsonProperty("procesoBeca")]
+        public string? ProcesoBeca {get; set;}
 
         [JsonProperty("trayectoriaEscolar")]
         public string? TrayectoriaEscolar { get; set; }
 
-        [JsonProperty("bajasEstudiantes")]
-        public string? BajasEstudiantes { get; set; }
+        [JsonProperty("procesoTitulacion")]
+        public string? ProcesoTitulacion {get; set;}
 
-        [JsonProperty("opcTitulacion")]
-        public string? OpcTitulacion { get; set; }
-
-        [JsonProperty("lengExtranjera")]
-        public string? LengExtranjera { get; set; }
-
-        [JsonProperty("estrategiasAntiplagio")]
-        public string? EstrategiasAntiplagio { get; set; }
-
-        [JsonProperty("pertinenciaSocial")]
-        public string? PertinenciaSocial { get; set; }
-
-        [JsonProperty("colabSociedad")]
-        public string? ColabSociedad { get; set; }
-
-        [JsonProperty("pronaces")]
-        public string? Pronaces { get; set; }
+        [JsonProperty("procesoDobleTitulacion")]
+        public string? ProcesoDobleTitulacion {get; set;}
     }
-
     
 
     public partial class Resultados
     {
-        [JsonProperty("demanda")]
-        public string? Demanda { get; set; }
-
         [JsonProperty("planMejora")]
         public string? PlanMejora { get; set; }
 
-        [JsonProperty("prodAcademica")]
-        public string? ProdAcademica { get; set; }
-
-        [JsonProperty("direccionTesis")]
-        public string? DireccionTesis { get; set; }
-
-        [JsonProperty("tutoriasProfEst")]
-        public string? TutoriasProfEst { get; set; }
-
-        [JsonProperty("comiteGraduacion")]
-        public string? ComiteGraduacion { get; set; }
-
-        [JsonProperty("tutorias")]
-        public string? Tutorias { get; set; }
-
-        [JsonProperty("reporteDesDoc")]
-        public string? ReporteDesDoc { get; set; }
-
         [JsonProperty("reporteAutoeval")]
         public string? ReporteAutoeval { get; set; }
+
+        [JsonProperty("percepcionPrograma")]
+        public string? PercepcionPrograma {get; set;}
     }
 }

@@ -1,0 +1,219 @@
+@page
+@model Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators.ProgramStructureModel
+@{
+    ViewData["Title"] = "Infraestructura - Posgrev";
+}
+
+<style>
+    .navbar {
+        background-color: #18529D;
+    }
+
+    .nav-link {
+        color: white;
+    }
+
+    .page-item {
+        width: 1000px;
+    }
+
+    a {
+        text-align: center;
+    }
+
+    .page-link {
+        background-color: #28AD56;
+        color: white;
+    }
+
+    p {
+        font-weight: bold;
+        font-size: smaller;
+        height: 0.75rem;
+    }
+
+    span {
+        font-weight: lighter;
+        font-size: smaller;
+        height: 0.75rem;
+        padding: 1rem;
+    }
+
+    h6 {
+        font-weight: lighter;
+        font-size: small;
+    }
+</style>
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page"
+                        href="/CoordinatorPages/CoordinatorHome">Evaluaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Resultados</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container-fluid">
+    <div class="container mt-4">
+        <h5>Evaluación del Posgrado</h5>
+
+        <nav>
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="/CoordinatorPages/ProgramIndicators/GeneralData">Datos
+                        Generales</a></li>
+                <li class="page-item"><a class="page-link"
+                        href="/CoordinatorPages/ProgramIndicators/ContextProgram">Compromiso</a></li>
+                <li class="page-item active"><a class="page-link"
+                        href="/CoordinatorPages/ProgramIndicators/ProgramStructure">Infraestructura</a></li>
+                <li class="page-item"><a class="page-link" href="#">Procesos Escolares</a></li>
+                <li class="page-item"><a class="page-link" href="#">Información del Estudiante</a></li>
+                <li class="page-item"><a class="page-link" href="#">Resultados</a></li>
+            </ul>
+        </nav>
+
+
+        <form class="mt-5 shadow" id="generalData" method="post">
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Compromiso y responsabilidad social del programa educativo de posgrado:</p>
+                <h6 class="ms-3 mb-3">
+                    • Documento aprobado por el Consejo Consultivo de Posgrado, Consejo de Área Académica y el Consejo
+                    Universitario General que contenga la versión vigente <br>
+                    del Plan de Estudios (la elaboración de este plan
+                    debe estar basada en la Guía para la creación y actualización de planes y programas educativos <br>
+                    de posgrado (UEP-GE-G-01). (Se debe adjuntar documento en extenso de la última actualización del
+                    plan de
+                    estudios correspondiente al programa educativo de posgrado).
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Fecha de última actualización del plan de estudios:</p>
+                <input type="date" class="form-control form-control-sm" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Principales cambios realizados en la última actualización del plan de estudios:</p>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Acta de Consejo Consultivo de Posgrado:</p>
+                <h6 class="ms-3 mb-3">
+                    • Copia del acta dónde se aprobó la última actualización al plan de estudios por el Consejo
+                    Consultivo de Posgrado.
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Acta de Consejo de Área:</p>
+                <h6 class="ms-3 mb-3">
+                    • Copia del acta dónde se aprobó la última actualización al plan de estudios por el Consejo de Área.
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Acta de actualización del plan de estudios:</p>
+                <h6 class="ms-3 mb-3">
+                    • Copia del acta dónde se aprueba la actualización del plan de estudios por el Consejo Universitario
+                    General.
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Mapa Curricular:</p>
+                <h6 class="ms-3 mb-3">
+                    Documento que incluya: <br>
+                    • Mapa curricular del plan de estudios (captura de pantalla de lo contenido en el plan de estudios).
+                    <br>
+                    • Mapa curricular del SYRPLAB (este reporte se obtiene del SIIU).
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Líneas de Generación de Aplicación y Conocimiento (LGAC):</p>
+                <h6 class="ms-3 mb-3">
+                    Tabla en Excel con la siguiente información: <br>
+                    • Nombre programa. <br>
+                    • Líneas de Generación de Aplicación y Conocimiento. <br>
+                    <br>
+                    Tabla en Excel con la siguiente información: <br>
+                    • Relacionar en una tabla los productos de investigación de estudiantes y profesores con las LGAC.
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="d-flex ms-3 me-3 mt-4">
+                <p class="col-4 me-1">Profesores de tiempo completo:</p>
+                <p class="col-4 me-1">Profesores de tiempo parcial:</p>
+                <p class="col-4 me-1">Colaboradores:</p>
+            </div>
+            <div class="d-flex ms-3 me-3">
+                <input type="text" class="form-control form-control-sm me-2" required>
+                <input type="text" class="form-control form-control-sm me-2" required>
+                <input type="text" class="form-control form-control-sm" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Integrantes del Núcleo Académico Básico, profesores de tiempo parcial y colaboradores:</p>
+                <h6 class="ms-3 mb-3">
+                    Tabla en Excel con la siguiente información: <br>
+                    • Número de personal.<br>
+                    • Tipo de contratación. <br>
+                    • Tipo de participación. <br>
+                    • Nombre del profesor. <br>
+                    • Sexo del profesor.<br>
+                    • Perfil SNI <br>
+                    • Perfil PRODEP.<br>
+                    • Grado profesional obtenido del profesor.<br>
+                    • Programa educativo de posgrado al que pertenece el profesor.<br>
+
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3 mb-4">
+                <p>Infraestructura del programa educativo de posgrado:</p>
+                <h6 class="ms-3 mb-3">
+                    Documento que contenga: <br>
+                    • Evidencia de los espacios para el personal académico, estudiantes y personas con discapacidad
+                    asignados al programa. <br>
+                    • Evidencia de laboratorios especializados. <br>
+                    • Evidencia sobre el equipamiento (descripción de equipos principales) y talleres. <br> 
+                    • Evidencia de recursos bibliográficos. <br>
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+</div>

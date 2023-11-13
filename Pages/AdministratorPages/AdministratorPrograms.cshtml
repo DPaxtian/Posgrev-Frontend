@@ -1,28 +1,28 @@
 @page
 @model Posgrev_Frontend.Pages.AdministratorPages.AdministratorProgramsModel
 @{
-    ViewData["Title"] = "Posgrev - Administrar Programas";
+  ViewData["Title"] = "Posgrev - Administrar Programas";
 }
 
 <style>
-    .card{
-        cursor: pointer;
-        
-        border-radius: 10px;
-        
-    }
+  .card {
+    cursor: pointer;
 
-    .card-body{
-      border-color: grey;
-    }
+    border-radius: 10px;
 
-    .navbar{
-        background-color: #18529D;
-    }
+  }
 
-    .nav-link{
-        color: white;
-    }
+  .card-body {
+    border-color: grey;
+  }
+
+  .navbar {
+    background-color: #18529D;
+  }
+
+  .nav-link {
+    color: white;
+  }
 </style>
 
 
@@ -36,53 +36,83 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Usuarios</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/AdministratorPages/EvaluationDates">Fechas de evaluación</a>
+        </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Buscar</button>
-      </form>
+      <div class="d-flex w-50">
+        <input class="form-control me-2" type="text" id="searchText" placeholder="Buscar por:" aria-label="Search">
+        <select class="form-select me-2 w-25" name="filter" id="inputFilter">
+          <option selected value="nombre">Nombre</option>
+          <option value="area">Área</option>
+          <option value="clave">Clave</option>
+        </select>
+      </div>
     </div>
   </div>
 </nav>
 
-<button type="button" class="btn btn-primary mt-3 ms-3" onclick="navigateToCreateProgram()">
+
+<div class="container">
+  <button type="button" class="btn btn-primary mt-3 ms-3" onclick="navigateToCreateProgram()">
     Nuevo Programa de Posgrado
-</button>
+  </button>
 
-<div class="container-fluid mt-3" id="programCard">
-
+  <div class="container-fluid mt-3" id="programCard">
     @foreach (var program in Model.activePrograms)
     {
-        <div class="card mt-2 mb-2" >
-            <div class="card-body" >
-                <div class="d-flex">
-                    <h5 class="card-title col-11"> @program.InformacionBasica.NombrePrograma </h5>
-                    <button type="button" class="btn btn-outline-primary">Editar</button>
-                </div>
-                <div class="d-flex">
-                  <span class="me-4">Area: @program.InformacionBasica.Area</span>
-                  <span class="me-4">Nivel: @program.InformacionBasica.Nivel</span>
-                  <span class="me-4">Región: @program.InformacionBasica.Region</span>
-                  <span>Año del Programa: @program.InformacionBasica.AnioPrograma</span>
-                </div>
-                
-                <div class="d-flex">
-                    <span class="me-4 mt-1">Clave del Programa: @program.InformacionBasica.ClavePrograma </span>
-                    <span class="mt-1">Clave DGP: @program.InformacionBasica.ClaveDGP</span>
-                </div>
-                <span class="mt-1">Coordinador: @program.InformacionBasica.NombreCoordinador</span>
-                <br>
-                <span class="mt-1">Correo del Coordinador: @program.InformacionBasica.CorreoCoordinador</span>
-                <br>                
-            </div>
+      <div class="card mt-2 mb-2">
+        <div class="card-body">
+          <div class="d-flex">
+            <h5 class="card-title col-11 nombre"> @program.InformacionBasica.NombrePrograma </h5>
+            <button type="button" class="btn btn-outline-primary" onclick="editProgram('@program.IdentificadorPrograma')">Editar</button>
+          </div>
+          <div class="d-flex">
+            <span class="me-4 area"><b>Área:</b> @program.InformacionBasica.Area</span>
+            <span class="me-4"><b>Nivel:</b> @program.InformacionBasica.Nivel</span>
+            <span class="me-4"><b>Región:</b> @program.InformacionBasica.Region</span>
+            <span><b>Año del Programa:</b> @program.InformacionBasica.AnioPrograma</span>
+          </div>
+
+          <div class="d-flex">
+            <span class="me-4 mt-1 clave"><b>Clave del Programa:</b> @program.InformacionBasica.ClavePrograma </span>
+            <span class="mt-1"><b>Clave DGP:</b> @program.InformacionBasica.ClaveDGP</span>
+          </div>
+          <span class="mt-1"><b>Coordinador:</b> @program.InformacionBasica.NombreCoordinador</span>
+          <br>
+          <span class="mt-1"><b>Correo del Coordinador:</b> @program.InformacionBasica.CorreoCoordinador</span>
+          <br>
         </div>
+      </div>
     }
 
+  </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    const navigateToCreateProgram = () => {
-        var url = "/AdministratorPages/ProgramGestion";
-        window.location.href = url;
-    }
+  const navigateToCreateProgram = () => {
+    var url = "/AdministratorPages/ProgramGestion";
+    window.location.href = url;
+  }
+
+  const editProgram = (idProgram) => {
+    var url = "/AdministratorPages/EditProgram/?idProgram=" + idProgram;
+    window.location.href = url;
+  }
+
+  $(document).ready(function () {
+        $("#searchText, #inputFilter").on("input change", function () {
+            var searchText = $("#searchText").val().toLowerCase();
+            var filterBy = $("#inputFilter").val();
+
+            // Filtra las tarjetas según el campo seleccionado
+            $(".card").each(function () {
+                var cardText = $(this).find("." + filterBy).text().toLowerCase();
+                $(this).toggle(cardText.includes(searchText));
+            });
+        });
+    });
 </script>

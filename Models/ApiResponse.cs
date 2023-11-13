@@ -14,4 +14,17 @@ namespace Posgrev_Frontend.Models
         public List<ProgramModel>? Programs {get; set;}
 
     }
+
+
+    public partial class ApiResponseProgramDetails
+    {
+        [JsonProperty("code")]
+        public int Code { get; set; }
+
+        [JsonProperty("msg")]
+        public string? Msg { get; set; }
+
+        [JsonProperty("response")]
+        public ProgramModel? Program { get; set; }
+    }
 }
