@@ -22,6 +22,7 @@ namespace Posgrev_Frontend.Logic
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     ApiResponseProgram programDescerialized = JsonConvert.DeserializeObject<ApiResponseProgram>(jsonResponse);
+                    Console.WriteLine(programDescerialized);
                     programs = programDescerialized.Programs;
                 }
             }

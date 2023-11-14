@@ -10,11 +10,8 @@ namespace Posgrev_Frontend.Models
         [JsonProperty("msg")]
         public String? Msg {get; set;}
 
-        [JsonProperty("programs")]
+        [JsonProperty("response")]
         public List<ProgramModel>? Programs {get; set;}
-
-        [JsonProperty("users")]
-        public List<DatosUsuario>? Users { get; set; }
 
     }
 

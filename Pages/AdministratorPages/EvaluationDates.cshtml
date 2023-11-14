@@ -4,3 +4,71 @@
     ViewData["Title"] = "Fechas de evaluacion";
 }
 
+
+<style>
+    .card {
+        cursor: pointer;
+
+        border-radius: 10px;
+
+    }
+
+    .card-body {
+        border-color: grey;
+    }
+
+    .navbar {
+        background-color: #18529D;
+    }
+
+    .nav-link {
+        color: white;
+    }
+</style>
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page"
+                        href="/AdministratorPages/AdministratorPrograms">Posgrados</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/AdministratorPages/EvaluationDates">Fechas de evaluación</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <button type="button" class="btn btn-primary mt-3 ms-3" data-bs-toggle="modal" data-bs-target="#newEvaluationPeriod">
+        Nuevo Periodo de Evaluación
+    </button>
+</div>
+
+
+<div class="modal fade" id="newEvaluationPeriod" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear Periodo de Evaluación</h1>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="newEvaluationDate">
+                    <input type="date" class="form-control form-control-sm" required>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
