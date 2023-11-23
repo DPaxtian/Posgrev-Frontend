@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Posgrev_Frontend.Models;
-
 
 namespace Posgrev_Frontend.Logic
 {
@@ -59,14 +61,16 @@ namespace Posgrev_Frontend.Logic
                 string dataToSend = JsonConvert.SerializeObject(information);
                 Console.WriteLine(dataToSend);
 
-                HttpClient server = new HttpClient();
-                string url = "http://localhost:4000/createUser";
-                HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
-                HttpResponseMessage responseMessage = await server.PostAsync(url, contentToSend);
-
-                if (responseMessage.IsSuccessStatusCode)
+                using (HttpClient server = new HttpClient())
                 {
-                    statusCode = 200;
+                    string url = "http://localhost:4000/createUser";
+                    HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
+                    HttpResponseMessage responseMessage = await server.PostAsync(url, contentToSend);
+
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        statusCode = 200;
+                    }
                 }
             }
             catch (Exception ex)
@@ -77,5 +81,65 @@ namespace Posgrev_Frontend.Logic
             return statusCode;
         }
 
+        public static async Task<bool> AuthenticateUser(string userName, string password)
+        {
+            try
+            {
+                var information = new
+                {
+                    nombreUsuario = userName,
+                    contrasena = password
+                };
+
+                string dataToSend = JsonConvert.SerializeObject(information);
+
+                using (HttpClient server = new HttpClient())
+                {
+                    string url = "http://localhost:4000/authenticate";
+                    HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
+                    HttpResponseMessage responseMessage = await server.PostAsync(url, contentToSend);
+
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+                        var authResult = JsonConvert.DeserializeAnonymousType(jsonResponse, new { usuario = new { rol = "" } });
+
+                        // Puedes procesar el resultado de la autenticación aquí si es necesario
+
+                        // Devuelve true si la autenticación fue exitosa
+                        return true;
+                    }
+                    else
+                    {
+                        // Autenticación fallida
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There is an error on AuthenticateUser" + ex);
+                return false;
+            }
+        }
+        public static async Task<bool> DeleteUser(int userID)
+        {
+            try
+            {
+                using (HttpClient server = new HttpClient())
+                {
+                    string url = $"http://localhost:4000/user/{userID}";
+                    HttpResponseMessage responseMessage = await server.DeleteAsync(url);
+
+                    return responseMessage.IsSuccessStatusCode;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There is an error on DeleteUser" + ex);
+                return false;
+            }
+        }
     }
 }
+

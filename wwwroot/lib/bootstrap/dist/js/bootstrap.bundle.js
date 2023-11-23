@@ -482,7 +482,8 @@
     }
 
     element.removeEventListener(typeEvent, fn, Boolean(delegationSelector));
-    delete events[typeEvent][fn.uidEvent];
+    
+    e events[typeEvent][fn.uidEvent];
   }
 
   function removeNamespacedHandlers(element, events, typeEvent, namespace) {

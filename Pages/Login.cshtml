@@ -15,29 +15,19 @@
         <div class="contenedor-login mx-4">
             <h1 class="h3 text-center text-success">Sistema de Autoevaluación de Programas de Posgrados</h1>
             <h2 class="h5 text-center text-muted">Unidad de Estudios de Posgrados</h2>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="UserName" class="form-label">Nombre de Usuario</label>
+                    <input type="text" class="form-control" id="UserName" name="UserName" asp-for="UserName">
+                </div>
 
-            <form>
-                <div class="card mx-auto mt-3">
-                    <div class="card-body">
-                        <h5 class="card-card-title text-center">Inicio de sesión</h5>
+                <div class="mb-3">
+                    <label for="Password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="Password" name="Password" asp-for="Password">
+                </div>
 
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Nombre de Usuario</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label" for="Password">Contraseña</label>
-                            <div class="input-group mb-3">
-                                <input type="password" class="form-control" id="Password">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-footer text-center">
-                        <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
-                    </div>
-
+                <div class="card-footer text-center">
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
                 </div>
             </form>
         </div>

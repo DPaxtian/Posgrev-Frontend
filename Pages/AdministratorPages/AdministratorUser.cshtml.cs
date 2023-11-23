@@ -36,5 +36,12 @@ namespace Posgrev_Frontend.Pages.AdministratorPages
 
                 return Page();
             }
+        [ValidateAntiForgeryToken]
+        public JsonResult OnPostDeleteUser(int userID)
+        {
+            bool deletionResult = UserLogic.DeleteUser(userID).Result;
+
+            return new JsonResult(new { success = deletionResult });
+        }
     }
 }
