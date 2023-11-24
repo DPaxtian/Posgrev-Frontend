@@ -5,7 +5,30 @@
 }
 
 <style>
-    /* Estilos adicionales si los necesitas */
+    .card {
+        cursor: pointer;
+        border-radius: 10px;
+    }
+
+    .card-body {
+        border-color: grey;
+    }
+
+    .navbar {
+        background-color: #18529D;
+    }
+
+    .nav-link {
+        color: white;
+    }
+
+    .card-title {
+        font-size: 1.5em; /* Tamaño de la fuente del título */
+    }
+
+    .user-info {
+        font-size: 1.2em; /* Tamaño de la fuente para el nombre de usuario y rol */
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -13,14 +36,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
+                    <a class="nav-link" href="/AdministratorPages/AdministratorPrograms">Posgrados</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/AdministratorPages/AdministratorUser">Usuarios</a>
                 </li>
-                <!-- Agrega más elementos del menú si es necesario -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/AdministratorPages/EvaluationDates">Fechas de evaluación</a>
+                </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Buscar usuario" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Buscar</button>
-            </form>
+            <div class="d-flex w-50">
+                <input class="form-control me-2" type="text" id="searchText" placeholder="Buscar por:" aria-label="Search">
+                <select class="form-select me-2 w-25" name="filter" id="inputFilter">
+                    <option selected value="nombre">Nombre</option>
+                    <option value="rol">Rol</option>
+                </select>
+            </div>
         </div>
     </div>
 </nav>
@@ -35,24 +66,63 @@
         <div class="card mt-2 mb-2">
             <div class="card-body">
                 <div class="d-flex">
+                    <!-- Mostrando solo el nombre en la parte superior -->
                     <h5 class="card-title col-11">
-                        ID: @(user.IDusuario ?? -1)
+                        Nombre: @(user.nombreUsuario ?? "No disponible")
                     </h5>
+                    <button type="button" class="btn btn-outline-primary" onclick="editUser('@user.IDusuario')">Editar</button>
                     <button type="button" class="btn btn-outline-primary" onclick="deleteUser(@(user.IDusuario ?? -1))">Borrar</button>
                 </div>
-                <div class="d-flex">
-                    <span class="me-4">Nombre usuario: @(user.nombreUsuario ?? "No disponible")</span>
-                    <span class="me-4">Rol: @(user.rol ?? "No disponible")</span>
+                <div class="d-flex user-info">
+                    <!-- Mostrando solo el rol debajo -->
+                    <span class="me-4 rol">Rol: @(user.rol ?? "No disponible")</span>
+                    <span class="me-4"> Identificador de programa: @(user.identificadorPrograma ?? "Sin identificador de programa")</span>
                 </div>
                 <div class="d-flex">
-                    <!-- Puedes agregar más elementos aquí si es necesario -->
+                    <!-- ... más elementos si es necesario ... -->
                 </div>
             </div>
         </div>
     }
 </div>
 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
+
+    const navigateToCreateNewUser = () => {
+        var url = "/AdministratorPages/UserGestion";
+        window.location.href = url;
+    }
+
+    const editUser = (IDusuario) => {
+        var url = "/AdministratorPages/EditUser/?IDusuario=" + IDusuario;
+        window.location.href = url;
+    }
+
+    $(document).ready(function () {
+        $("#searchText, #inputFilter").on("input change", function () {
+            var searchText = $("#searchText").val().toLowerCase();
+            var filterBy = $("#inputFilter").val();
+
+            // Filtra las tarjetas según el campo seleccionado
+            $(".card").each(function () {
+                var cardText = "";
+
+                if (filterBy === "nombre") {
+                    // Buscar por nombre
+                    cardText = $(this).find(".card-title").text().toLowerCase();
+                } else if (filterBy === "rol") {
+                    // Buscar por rol
+                    cardText = $(this).find(".user-info .rol").text().toLowerCase();
+                }
+
+                $(this).toggle(cardText.includes(searchText));
+            });
+        });
+    });
+
     const deleteUser = (userID) => {
         if (confirm("¿Estás seguro de que deseas borrar este usuario?")) {
             $.ajax({
@@ -69,4 +139,5 @@
         }
     };
 </script>
+
 

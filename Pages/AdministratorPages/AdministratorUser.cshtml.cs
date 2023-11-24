@@ -36,12 +36,32 @@ namespace Posgrev_Frontend.Pages.AdministratorPages
 
                 return Page();
             }
-        [ValidateAntiForgeryToken]
-        public JsonResult OnPostDeleteUser(int userID)
-        {
-            bool deletionResult = UserLogic.DeleteUser(userID).Result;
 
-            return new JsonResult(new { success = deletionResult });
+        public async Task<IActionResult> OnPostDeleteUserAsync(string userId)
+        {
+            try
+            {
+                int deleteStatusCode = await UserLogic.DeleteUser(userId);
+
+                if (deleteStatusCode == 204)
+                {
+                    // Éxito al eliminar el usuario
+                    TempData["Message"] = "Usuario eliminado con éxito.";
+                }
+                else
+                {
+                    // Error al intentar eliminar el usuario
+                    TempData["Error"] = "Error al intentar eliminar el usuario.";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al intentar eliminar el usuario: " + ex);
+                TempData["Error"] = "Error al intentar eliminar el usuario.";
+            }
+
+            // Redirige de nuevo a la página de administración de usuarios
+            return RedirectToPage("/AdministratorPages/AdministratorUser");
         }
     }
 }
