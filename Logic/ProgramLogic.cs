@@ -22,7 +22,6 @@ namespace Posgrev_Frontend.Logic
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     ApiResponseProgram programDescerialized = JsonConvert.DeserializeObject<ApiResponseProgram>(jsonResponse);
-                    Console.WriteLine(programDescerialized);
                     programs = programDescerialized.Programs;
                 }
             }
@@ -55,7 +54,8 @@ namespace Posgrev_Frontend.Logic
                     anioPrograma = newInformation.AnioPrograma
                 };
 
-                var data = new {
+                var data = new
+                {
                     informacionBasica = information
                 };
 
@@ -66,12 +66,12 @@ namespace Posgrev_Frontend.Logic
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PostAsync(url, contentToSend);
 
-                if(responseMessage.IsSuccessStatusCode)
+                if (responseMessage.IsSuccessStatusCode)
                 {
                     statusCode = 200;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("There was an error creating the program" + ex);
             }
@@ -100,7 +100,8 @@ namespace Posgrev_Frontend.Logic
                     anioPrograma = editedInformation.InformacionBasica.AnioPrograma
                 };
 
-                var data = new {
+                var data = new
+                {
                     activo = editedInformation.Activo,
                     informacionBasica = information
                 };
@@ -112,12 +113,12 @@ namespace Posgrev_Frontend.Logic
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PutAsync(url, contentToSend);
 
-                if(responseMessage.IsSuccessStatusCode)
+                if (responseMessage.IsSuccessStatusCode)
                 {
                     statusCode = 200;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("There was an error editing the program" + ex);
             }
@@ -138,18 +139,63 @@ namespace Posgrev_Frontend.Logic
                 HttpResponseMessage message = await server.GetAsync(url);
                 string jsonResponse = await message.Content.ReadAsStringAsync();
 
-                if(message.IsSuccessStatusCode)
+                if (message.IsSuccessStatusCode)
                 {
                     ApiResponseProgramDetails programDescerialized = JsonConvert.DeserializeObject<ApiResponseProgramDetails>(jsonResponse);
                     programObtained = programDescerialized.Program;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("There is an error at GetProgramDetails" + ex);
             }
 
             return programObtained;
+        }
+
+
+        public static async Task<int> SaveGeneralData(DatosGenerales generalData)
+        {
+            int statusCode = 500;
+
+            try
+            {
+                
+
+
+                var generalInformation = new
+                {
+                    
+                    denominacion = generalData.Denominacion,
+                    nivel = generalData.Nivel,
+                    modalidad = generalData.Modalidad,
+                    orientacion = generalData.Orientacion,
+                    paginaWeb = generalData.PaginaWeb,
+                    duracion = generalData.Duracion,
+                    periodosLectivos = generalData.PeriodosLectivos,
+                    periodicidadConvocatoria = generalData.PeriodicidadConvocatoria
+                };
+
+                
+
+                string dataToSend = JsonConvert.SerializeObject(generalInformation);
+
+                HttpClient server = new HttpClient();
+                string url = "http://localhost:3000/saveGeneralData/PID-001";
+                HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    statusCode = 200;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an error saving the general data" + ex);
+            }
+
+            return statusCode;
         }
 
     }

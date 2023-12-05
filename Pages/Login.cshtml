@@ -1,7 +1,7 @@
 ﻿@page
 @model Posgrev_Frontend.Pages.LoginModel
 @{
-	ViewData["Title"] = "Posgrev - Inicio de Sesión";
+    ViewData["Title"] = "Posgrev - Inicio de Sesión";
 }
 
 <link rel="stylesheet" href="/css/style_login.css" />
@@ -23,7 +23,8 @@
 
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Nombre de Usuario</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp">
                         </div>
 
                         <div class="mb-3">
@@ -37,9 +38,68 @@
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
                     </div>
-
                 </div>
             </form>
+            <div class="text-center" style="height: 200px;">
+                <button type="button" class="btn btn-link mt-3" data-bs-toggle="modal"
+                    data-bs-target="#olvidoContrasenaModal">
+                    ¿Olvidaste tu contraseña?
+                </button>
+            </div>
+
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="olvidoContrasenaModal" tabindex="-1" aria-labelledby="olvidoContrasenaModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="olvidoContrasenaModalLabel">Recuperar Contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para ingresar el nombre de usuario -->
+                <form>
+                    <div class="mb-3">
+                        <label for="nombreUsuarioOlvido" class="form-label">Nombre de Usuario</label>
+                        <input type="text" class="form-control" id="nombreUsuarioOlvido" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="enviarSolicitudBtn" onclick="enviarSolicitudRecuperacion()">Enviar Solicitud</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('olvidoContrasenaEnlace').addEventListener('click', function () {
+        var olvidoContrasenaModal = new bootstrap.Modal(document.getElementById('olvidoContrasenaModal'));
+        olvidoContrasenaModal.show();
+    });
+
+
+    function enviarSolicitudRecuperacion() {
+        console.log('me ejecuto')
+        const nombreUsuario = document.getElementById('nombreUsuarioOlvido').value;
+
+        fetch(`http://localhost:4000/sendRecoverEmail/${nombreUsuario}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Aquí puedes manejar la respuesta del servidor, por ejemplo, mostrar un mensaje al usuario
+            })
+            .catch(error => {
+                console.error('Error al enviar la solicitud:', error);
+                // Maneja el error, por ejemplo, muestra un mensaje de error al usuario
+            });
+    }
+   
+
+</script>

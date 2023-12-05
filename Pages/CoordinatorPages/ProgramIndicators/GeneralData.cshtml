@@ -39,7 +39,7 @@
         padding: 1rem;
     }
 
-    h6{
+    h6 {
         font-weight: lighter;
         font-size: small;
     }
@@ -70,8 +70,10 @@
             <nav>
                 <ul class="pagination">
                     <li class="page-item active"><a class="page-link" href="#">Datos Generales</a></li>
-                    <li class="page-item"><a class="page-link" href="/CoordinatorPages/ProgramIndicators/ContextProgram">Compromiso</a></li>
-                    <li class="page-item"><a class="page-link" href="/CoordinatorPages/ProgramIndicators/ProgramStructure">Infraestructura</a></li>
+                    <li class="page-item"><a class="page-link"
+                            href="/CoordinatorPages/ProgramIndicators/ContextProgram">Compromiso</a></li>
+                    <li class="page-item"><a class="page-link"
+                            href="/CoordinatorPages/ProgramIndicators/ProgramStructure">Infraestructura</a></li>
                     <li class="page-item"><a class="page-link" href="#">Procesos Escolares</a></li>
                     <li class="page-item"><a class="page-link" href="#">Información del Estudiante</a></li>
                     <li class="page-item"><a class="page-link" href="#">Resultados</a></li>
@@ -80,11 +82,12 @@
         </div>
 
 
-        <form class="mt-5 shadow" id="generalData" method="post">
+        <h5 class="mt-5 mb-3">Datos Generales del Programa</h5>
+        <form class="shadow" id="generalData" method="post">
 
             <div class="ms-3 me-3">
                 <p>Denominación:</p>
-                <input type="text" class="form-control form-control-sm" readonly>
+                <input type="text" name="Denominacion" class="form-control form-control-sm">
             </div>
 
 
@@ -93,14 +96,14 @@
                 <p>Inicio de actividades:</p>
             </div>
             <div class="d-flex ms-3 me-3">
-                <input type="date" class="form-control form-control-sm me-3" required>
-                <input type="date" class="form-control form-control-sm" required>
+                <input type="date" name="DatosGenerales.Antecedentes.FechaAprobacion" class="form-control form-control-sm me-3" required>
+                <input type="date" name="DatosGenerales.Antecedentes.IniciaAct" class="form-control form-control-sm" required>
             </div>
 
 
             <div class="ms-3 me-3 mt-3">
                 <p>Nivel:</p>
-                <select class="form-select form-select-sm" required>
+                <select name="Nivel" class="form-select form-select-sm" required>
                     <option selected disabled value="">Seleccione una opción</option>
                     <option value="Diplomado de Especializacion">Diploma de Especialización</option>
                     <option value="Título de Grado de Maestro">Título de Grado de Maestro o Maestra</option>
@@ -114,18 +117,20 @@
                 <p>Región:</p>
             </div>
             <div class="d-flex ms-3 me-3">
-                <select class="form-select form-select-sm me-3" required>
+                <select class="form-select form-select-sm me-3" name="Adscripcion" required>
                     <option selected disabled value="">Seleccione una opción</option>
+                    <option value="prueba">Prueba</option>
                 </select>
-                <select class="form-select form-select-sm" required>
+                <select class="form-select form-select-sm" name="Region" required>
                     <option selected disabled value="">Seleccione una opción</option>
+                    <option value="prueba">prueba</option>
                 </select>
             </div>
 
 
             <div class="ms-3 me-3 mt-3">
                 <p>Modalidad:</p>
-                <select class="form-select form-select-sm" required>
+                <select class="form-select form-select-sm" name="Modalidad" required>
                     <option selected disabled value="">Seleccione una opción</option>
                     <option value="Escolarizado">Escolarizado</option>
                     <option value="Virtual">Virtual</option>
@@ -136,7 +141,7 @@
 
             <div class="ms-3 me-3 mt-3">
                 <p>Orientación:</p>
-                <select class="form-select form-select-sm" required>
+                <select class="form-select form-select-sm" name="Orientacion" required>
                     <option selected disabled value="">Seleccione una opción</option>
                     <option value="Investigación">Investigación</option>
                     <option value="Profesionalizante">Profesionalizante</option>
@@ -146,23 +151,27 @@
 
             <div class="ms-3 me-3 mt-3">
                 <p>Página Web:</p>
-                <input type="text" class="form-control form-control-sm" required>
+                <input type="text" class="form-control form-control-sm" name="PaginaWeb" required>
             </div>
 
 
             <div class="ms-3 me-3 mt-3">
                 <p>Registro ante la Dirección General de Profesiones:</p>
-                <h6 class="ms-3">
-                    Documento que avale: <br>
+                <h6 class="mt-4 mb-3">
+                    Documento que avale: <br><br>
                     • El registro oficial ante la Dirección General de Profesiones.
                 </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+                <h6 class="mb-4">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" name="RegistroProfesiones" id="formFileSm" type="file" required>
             </div>
 
 
             <div class="ms-3 me-3 mt-3">
                 <p>Duración del Programa:</p>
-                <select class="form-select form-select-sm" required>
+                <select class="form-select form-select-sm" name="Duracion" required>
                     <option selected disabled value="">Seleccione una opción</option>
                     <option value="12 meses">12 meses</option>
                     <option value="24 meses">24 meses</option>
@@ -173,7 +182,7 @@
 
             <div class="ms-3 me-3 mt-3">
                 <p>Periodos Lectivos:</p>
-                <select class="form-select form-select-sm" required>
+                <select class="form-select form-select-sm" name="PeriodosLectivos" required>
                     <option selected disabled value="">Seleccione una opción</option>
                     <option value="2 semestres">2 semestres</option>
                     <option value="4 semestres">4 semestres</option>
@@ -184,7 +193,7 @@
 
             <div class="ms-3 me-3 mt-3">
                 <p>Periodicidad de convocatoria:</p>
-                <select class="form-select form-select-sm" required>
+                <select class="form-select form-select-sm" name="PeriodicidadConvocatoria" required>
                     <option selected disabled value="">Seleccione una opción</option>
                     <option value="Anual">Anual</option>
                     <option value="Bienal">Bienal</option>
@@ -193,14 +202,18 @@
             </div>
 
 
-            <div class="ms-3 me-3 mt-3">
+            <div class="ms-3 me-3 mt-4">
                 <p>Cuota de recuperación por generación:</p>
-                <h6 class="mb-2 ms-3">
-                    Tabla en Excel con la siguiente información: <br>
+                <h6 class="mb-4">
+                    Tabla en Excel con la siguiente información: <br><br>
                     • Nombre del programa. <br>
                     • Monto total de la cuota de recuperación por generación.
                 </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" name="CuotaRecuperacion" id="formFileSm" type="file" required>
             </div>
 
 
@@ -243,9 +256,20 @@
                     <label class="form-check-label" for="pronaces9">Energia y cambio climático</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="pronaces10" value="Agentes tóxicos y procesos contaminantes">
+                    <input class="form-check-input" type="checkbox" id="pronaces10"
+                        value="Agentes tóxicos y procesos contaminantes">
                     <label class="form-check-label" for="pronaces10">Agentes tóxicos y procesos contaminantes</label>
                 </div>
+            </div>
+
+            <div class="d-flex justify-content-end me-3">
+                <button type="button" class="btn btn-secondary me-2 mb-4" style="width: 200px;">
+                    Guardar como borrador
+                </button>
+
+                <button type="submit" class="btn btn-primary shadow mb-4" style="width: 250px;">
+                    Siguiente
+                </button>
             </div>
 
         </form>

@@ -27,4 +27,17 @@ namespace Posgrev_Frontend.Models
         [JsonProperty("response")]
         public ProgramModel? Program { get; set; }
     }
+
+
+    public partial class ApiResponseEvaluation
+    {
+        [JsonProperty("code")]
+        public int Code { get; set; }
+
+        [JsonProperty("msg")]
+        public string? Msg { get; set; }
+
+        [JsonProperty("response")]
+        public List<EvaluationPeriodModel>? EvaluationPeriods { get; set; }
+    }
 }

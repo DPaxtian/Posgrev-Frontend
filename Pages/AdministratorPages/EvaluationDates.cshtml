@@ -46,29 +46,300 @@
     </div>
 </nav>
 
+
 <div class="container">
-    <button type="button" class="btn btn-primary mt-3 ms-3" data-bs-toggle="modal" data-bs-target="#newEvaluationPeriod">
+    <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#newEvaluationPeriod">
         Nuevo Periodo de Evaluación
     </button>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Identificador</th>
+                <th>Fecha inicio</th>
+                <th>Fecha Limite</th>
+                <th>Estado</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+                <th>Prórroga</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var period in Model.evaluationPeriods)
+            {
+                <tr>
+                    <td>@period.IdentificadorPeriodoEvaluacion</td>
+                    <td>@period.FechaInicio</td>
+                    <td>@period.FechaLimite</td>
+                    <td>@period.Status</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-success"
+                            onclick="openEditModal('@period.IdentificadorPeriodoEvaluacion')">
+                            <img src="/images/edit_icon.png" alt="Image" style="width: 20px; height: 20px;" />
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-success"
+                            onclick="deleteEvaluationPeriod('@period.IdentificadorPeriodoEvaluacion')">
+                            <img src="/images/delete_icon.png" alt="Image" style="width: 20px; height: 20px;" />
+                        </button>
+                    </td>
+                    <td>
+                        @if (period.Status == "Concluido" || period.Status == "Por Iniciar")
+                        {
+                            <button type="button" class="btn btn-sm btn-success" disabled>Añadir Prórroga</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-sm btn-success"
+                                onclick="addEvaluationPeriodExtension('@period.IdentificadorPeriodoEvaluacion')">Añadir
+                                Prórroga</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <div id="succesfullToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto"></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+        </div>
+        <div class="toast-body">
+            <!-- Contenido del mensaje flotante -->
+        </div>
+
+    </div>
+
 </div>
 
 
 <div class="modal fade" id="newEvaluationPeriod" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear Periodo de Evaluación</h1>
-            </div>
-            <div class="modal-body">
-                <form method="post" id="newEvaluationDate">
-                    <input type="date" class="form-control form-control-sm" required>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Confirmar</button>
+    aria-hidden="true">
+    <form method="post" id="newEvaluationDate">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear Periodo de Evaluación</h1>
+                </div>
+                <div class="modal-body">
+                    <h6 class="mt-4 fw-light">Identificador de periodo de evaluación</h6>
+                    <input type="text" name="IdentificadorPeriodoEvaluacion" class="form-control"
+                        placeholder="Ej: Nov2023-Nov2024" required>
+                    <h6 class="mt-4 fw-light">Fecha de inicio de periodo de evaluación</h6>
+                    <input type="date" name="FechaInicio" class="form-control form-control-sm" required>
+                    <h6 class="mt-4 fw-light">Fecha de termino de periodo de evaluación</h6>
+                    <input type="date" name="FechaLimite" class="form-control form-control-sm" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
+
+
+<div class="modal fade" id="editEvaluationPeriodModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-hidden="true">
+    <form method="post" id="editEvaluationDate">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Periodo de Evaluación</h1>
+                </div>
+                <div class="modal-body">
+                    <!-- Aquí agrega campos para editar la información existente -->
+                    <h6 class="mt-4 fw-light">Identificador de periodo de evaluación</h6>
+                    <input id="idEvaluation" hidden>
+                    <input type="text" id="editIdentifier" name="IdentificadorPeriodoEvaluacion" class="form-control"
+                        required>
+                    <h6 class="mt-4 fw-light">Fecha de inicio de periodo de evaluación</h6>
+                    <input type="date" id="editStartDate" name="FechaInicio" class="form-control form-control-sm"
+                        required>
+                    <h6 class="mt-4 fw-light">Fecha de termino de periodo de evaluación</h6>
+                    <input type="date" id="editEndDate" name="FechaLimite" class="form-control form-control-sm"
+                        required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="saveEditedEvaluationPeriod()">Guardar
+                        Cambios</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    function addEvaluationPeriodExtension(identifier) {
+        const succesfullToast = new bootstrap.Toast(document.getElementById('succesfullToast'));
+
+        fetch(`http://localhost:3000/addPeriodExtension/${identifier}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    succesfullToast._element.querySelector('.toast-header').innerText = 'Exito.';
+                    succesfullToast._element.querySelector('.toast-body').innerText = 'Prórroga añadida con éxito.';
+                    succesfullToast._element.classList.remove('bg-danger');
+                    succesfullToast._element.classList.add('bg-success');
+                } else {
+                    succesfullToast._element.querySelector('.toast-header').innerText = 'Error';
+                    succesfullToast._element.querySelector('.toast-body').innerText = 'Error al añadir la prórroga.';
+                    succesfullToast._element.classList.remove('bg-success');
+                    succesfullToast._element.classList.add('bg-danger');
+                }
+
+                succesfullToast.show();
+
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            })
+            .catch(error => {
+                console.error(error);
+
+                succesfullToast._element.querySelector('.toast-header').innerText = 'Error';
+                succesfullToast._element.querySelector('.toast-body').innerText = 'Error al añadir la prórroga.';
+                succesfullToast._element.classList.remove('bg-success');
+                succesfullToast._element.classList.add('bg-danger');
+
+                succesfullToast.show();
+            });
+    }
+
+
+    function deleteEvaluationPeriod(identifier) {
+        const succesfullToast = new bootstrap.Toast(document.getElementById('succesfullToast'));
+
+        fetch(`http://localhost:3000/deleteEvaluationPeriod/${identifier}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    succesfullToast._element.querySelector('.toast-header').innerText = 'Exito.';
+                    succesfullToast._element.querySelector('.toast-body').innerText = 'Periodo de evaluación eliminado con éxito';
+                    succesfullToast._element.classList.remove('bg-danger');
+                    succesfullToast._element.classList.add('bg-success');
+                } else {
+                    succesfullToast._element.querySelector('.toast-header').innerText = 'Error';
+                    succesfullToast._element.querySelector('.toast-body').innerText = 'Error al eliminar el periodo';
+                    succesfullToast._element.classList.remove('bg-success');
+                    succesfullToast._element.classList.add('bg-danger');
+                }
+
+                // Muestra el toast
+                succesfullToast.show();
+
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            })
+            .catch(error => {
+                console.error(error);
+                // Manejar errores
+                succesfullToast._element.querySelector('.toast-header').innerText = 'Error';
+                succesfullToast._element.querySelector('.toast-body').innerText = 'Error al eliminar el periodo';
+                succesfullToast._element.classList.remove('bg-success');
+                succesfullToast._element.classList.add('bg-danger');
+
+                // Muestra el toast
+                succesfullToast.show();
+            });
+    }
+
+
+    function openEditModal(identifier) {
+        const editModal = new bootstrap.Modal(document.getElementById('editEvaluationPeriodModal'));
+
+        // Lógica para obtener información del periodo de evaluación utilizando una solicitud al servidor
+        fetch(`http://localhost:3000/getEvaluationPeriodById/${identifier}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al obtener datos del periodo de evaluación');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Convertir las fechas a objetos Date
+                const startDate = new Date(data.response.fechaInicio);
+                const endDate = new Date(data.response.fechaLimite);
+
+                // Formatear las fechas como "dd/mm/yyyy"
+                const formattedStartDate = formatDate(startDate);
+                const formattedEndDate = formatDate(endDate);
+
+                console.log(formattedStartDate)
+                // Cambiar los valores de los campos del formulario de edición
+                document.getElementById('idEvaluation').value = data.response.identificadorPeriodoEvaluacion
+                document.getElementById('editIdentifier').value = data.response.identificadorPeriodoEvaluacion;
+                document.getElementById('editStartDate').value = formattedStartDate;
+                document.getElementById('editEndDate').value = formattedEndDate;
+
+                // Abrir el modal de edición
+                editModal.show();
+            })
+            .catch(error => {
+                console.error(error);
+                showToast('Error al obtener datos del periodo de evaluación', false);
+            });
+    }
+
+
+    function saveEditedEvaluationPeriod() {
+        const editModal = new bootstrap.Modal(document.getElementById('editEvaluationPeriodModal'));
+
+        // Lógica para guardar los cambios utilizando una solicitud al servidor
+        const idPeriod = document.getElementById('idEvaluation').value
+        const identifier = document.getElementById('editIdentifier').value;
+        const startDate = document.getElementById('editStartDate').value;
+        const endDate = document.getElementById('editEndDate').value;
+
+        console.log(idPeriod)
+        fetch(`http://localhost:3000/editEvaluationPeriod/${idPeriod}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                identificadorPeriodoEvaluacion: identifier,
+                fechaInicio: startDate,
+                fechaLimite: endDate
+                // Agrega otros campos según tu modelo de datos
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    editModal.hide();
+                    location.reload();
+                } else {
+                    
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                
+            });
+    }
+
+
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+
+</script>

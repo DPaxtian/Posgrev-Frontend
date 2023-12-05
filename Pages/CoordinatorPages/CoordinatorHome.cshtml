@@ -3,3 +3,64 @@
 @{
     ViewData["Title"] = "Inicio de Coordinador";
 }
+
+<style>
+    .card {
+        cursor: pointer;
+
+        border-radius: 10px;
+
+    }
+
+    .card-body {
+        border-color: grey;
+    }
+
+    .navbar {
+        background-color: #18529D;
+    }
+
+    .nav-link {
+        color: white;
+    }
+
+</style>
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page"
+                        href="/CoordinatorPages/CoordinatorHome">Evaluaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Resultados</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="container-fluid mt-3">
+        @foreach (var period in @Model.evaluationPeriods)
+        {
+            if (@period.Status.Equals("En Curso"))
+            {
+                <div class="card mt-4 mb-2">
+                    <div class="card-body">
+                        <h4 class="w-100 mb-4 text-center">Periodo de evaluación activo</h4>
+                        <h5 class="card-title"> <b>Periodo de evaluación:</b> @period.IdentificadorPeriodoEvaluacion</h5>
+                        <h6> <b>Fecha de inicio: </b> @period.FechaInicio</h6>
+                        <h6> <b>Fecha limite: </b> @period.FechaLimite</h6>
+                        <h6 class="mb-4"> <b>Estado: </b> @period.Status</h6>
+                        <a href="/CoordinatorPages/ProgramIndicators/GeneralData" class="btn btn-primary w-100">Subir Información</a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
