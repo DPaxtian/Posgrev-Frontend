@@ -1,7 +1,7 @@
 @page
-@model Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators.ContextProgramModel
+@model Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators.ResultsModel
 @{
-    ViewData["Title"] = "Compromiso - Posgrev";
+    ViewData["Title"] = "Procesos Escolares - Posgrev";
 }
 
 <style>
@@ -70,60 +70,60 @@
         <div class="mt-4">
             <nav>
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link"  asp-page="/CoordinatorPages/ProgramIndicators/GeneralData" asp-route-idProgram="@Model.IdProg">Datos Generales</a></li>
-                    <li class="page-item active"><a class="page-link">Compromiso</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/GeneralData" asp-route-idProgram="@Model.IdProg">Datos Generales</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ContextProgram" asp-route-idProgram="@Model.IdProg">Compromiso</a></li>
                     <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ProgramStructure" asp-route-idProgram="@Model.IdProg">Infraestructura</a></li>
                     <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ScholarProcess" asp-route-idProgram="@Model.IdProg">Procesos Escolares</a></li>
                     <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/StudentInfo" asp-route-idProgram="@Model.IdProg">Información del Estudiante</a></li>
-                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/Results" asp-route-idProgram="@Model.IdProg">Resultados</a></li>
+                    <li class="page-item active"><a class="page-link" >Resultados</a></li>
                 </ul>
             </nav>
         </div>
 
-        <h5 class="mt-5 mb-3">Compromiso</h5>
+
+        <h5 class="mt-5 mb-3">Resultados</h5>
         <form class="shadow" id="generalData" method="post">
             <input type="hidden" name="idProgram" value="@Model.IdProg" />
 
-            <div class="mt-1 ms-3 me-3">
-                <p>Compromiso y responsabilidad social del programa educativo de posgrado:</p>
-                <h6 class="ms-3 mb-3">Documento que contenga una descripción sobre los siguientes puntos. <br>
-                    • Compromisos sociales del programa educativo de posgrado con la comunidad. <br>
-                    • Presupuesto para actividades académicas y/o vinculación. <br>
-                    • Procedimientos colegiados para la solución de controversias que surjan al interior de la comunidad
-                    académica del programa. <br>
-                    • Compromiso para la atención a casos de violencia de género, teniendo como principios la debida
-                    diligencia, la confidencialidad, la transparencia y accesibilidad.
-                </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
-            </div>
-
-
-            <div class="mt-4 ms-3 me-3">
-                <p>Vinculación con los sectores de la sociedad:</p>
+            <div class="ms-3 me-3 mt-3">
+                <p>Reporte generado por el sistema de autoevaluación.</p>
                 <h6 class="ms-3 mb-3">
-                    Documento que contenga una descripción de los siguientes puntos: <br>
-                    • Actividades de colaboración más relevantes que tiene el programa educativo de posgrado con los
-                    sectores de la sociedad. <br>
-                    • Acuerdos de colaboración con los sectores de la sociedad.
+                   Documento o reporte que indique: <br>
+                   • Resultado de evaluación anterior (siempre y cuando ya se haya realizado un ejercicio de evaluación del programa educativo de posgrado anteriormente).   <br>
+                </h6>
+                <input type="text" class="form-control form-control-sm" required>
+                <h6 class="mb-3 mt-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
                 </h6>
                 <input class="form-control form-control-sm" id="formFileSm" type="file" required>
             </div>
 
-
-            <div class="mt-4 ms-3 me-3">
-                <p>Actividades de retribución social:</p>
-                <h6 class="ms-3 mb-3">
-                    Tabla en Excel con la siguiente información: <br>
-                    • Nombre alumno <br>
-                    • Matrícula <br>
-                    • Tipo de actividades que realiza el alumno becado y que se relacionen con la retribución social,
-                    que promuevan el acceso universal al conocimiento científico y sus beneficios sociales.
-                </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
-            </div>
             
+            <div class="mt-4 ms-3 me-3">
+                <p>Percepción de los programas</p>
+                <h6 class="ms-3 mb-3">
+                Describir como percibe la operatividad general de su programa educativo de posgrado
+                </h6>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+            </div>
 
-            <div class="d-flex justify-content-end me-3 mt-5">
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Plan de mejora del programa educativo de posgrado:</p>
+                <h6 class="ms-3 mb-3">
+                   Documento con una descripción sobre: <br>
+                   • Plan de mejora del programa educativo posgrado. <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="d-flex justify-content-end me-3 mt-4">
                 <button type="button" class="btn btn-secondary me-2 mb-4" style="width: 200px;">
                     Guardar como borrador
                 </button>
@@ -132,7 +132,9 @@
                     Siguiente
                 </button>
             </div>
+
         </form>
 
     </div>
+
 </div>

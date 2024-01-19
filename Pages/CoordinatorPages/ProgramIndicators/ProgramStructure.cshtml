@@ -69,22 +69,19 @@
 
         <nav>
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="/CoordinatorPages/ProgramIndicators/GeneralData">Datos
-                        Generales</a></li>
-                <li class="page-item"><a class="page-link"
-                        href="/CoordinatorPages/ProgramIndicators/ContextProgram">Compromiso</a></li>
-                <li class="page-item active"><a class="page-link"
-                        href="/CoordinatorPages/ProgramIndicators/ProgramStructure">Infraestructura</a></li>
-                <li class="page-item"><a class="page-link" href="#">Procesos Escolares</a></li>
-                <li class="page-item"><a class="page-link" href="#">Información del Estudiante</a></li>
-                <li class="page-item"><a class="page-link" href="#">Resultados</a></li>
+                <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/GeneralData" asp-route-idProgram="@Model.IdProg">Datos Generales</a></li>
+                <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ContextProgram" asp-route-idProgram="@Model.IdProg">Compromiso</a></li>
+                <li class="page-item active"><a class="page-link">Infraestructura</a></li>
+                <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ScholarProcess" asp-route-idProgram="@Model.IdProg">Procesos Escolares</a></li>
+                <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/StudentInfo" asp-route-idProgram="@Model.IdProg">Información del Estudiante</a></li>
+                <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/Results" asp-route-idProgram="@Model.IdProg">Resultados</a></li>
             </ul>
         </nav>
 
-
-        <form class="mt-5 shadow" id="generalData" method="post">
-
-            <div class="mt-4 ms-3 me-3">
+        <h5 class="mt-5 mb-3">Compromiso</h5>
+        <form class="shadow" id="generalData" method="post">
+            
+            <div class="ms-3 me-3">
                 <p>Compromiso y responsabilidad social del programa educativo de posgrado:</p>
                 <h6 class="ms-3 mb-3">
                     • Documento aprobado por el Consejo Consultivo de Posgrado, Consejo de Área Académica y el Consejo
@@ -208,6 +205,17 @@
                     • Evidencia de recursos bibliográficos. <br>
                 </h6>
                 <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="d-flex justify-content-end me-3 mt-5">
+                <button type="button" class="btn btn-secondary me-2 mb-4" style="width: 200px;">
+                    Guardar como borrador
+                </button>
+
+                <button type="submit" class="btn btn-primary shadow mb-4" style="width: 250px;">
+                    Siguiente
+                </button>
             </div>
         </form>
 

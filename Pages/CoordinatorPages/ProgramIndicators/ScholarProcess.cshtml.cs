@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators
 {
-    public class ProgramStructureModel : PageModel
+    public class ScholarProcessModel : PageModel
     {
         public string? IdProg {get; set;}
 

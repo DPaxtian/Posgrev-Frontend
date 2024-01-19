@@ -5,7 +5,7 @@
 }
 
 <style>
-    .form-control{
+    .form-control {
         border-color: grey;
     }
 </style>
@@ -20,8 +20,25 @@
 
                 <div>
                     <h5 class="fw-light mt-4">Nombre del programa</h5>
-                    <input type="text" name="NombrePrograma" class="form-control" id="inputRoutineTitle"
-                        placeholder="Ej: Doctorado en ciencias agropecuarias" required>
+                    <select class="form-select me-4" name="NombrePrograma" id="inputProgramName" required>
+                        <option selected disabled value="">Seleccione una opción</option>
+                        @foreach (var item in Model.itemsDenominations.ItemsDenominaciones)
+                        {
+                            <option value=@item>@item</option>
+                        }
+                    </select>
+
+                    <h5 class="fw-light mt-4">Coordinador del Programa</h5>
+                    <select class="form-select me-4" name="idUser" id="inputId" required>
+                        <option selected disabled value="">Seleccione una opción</option>
+                        @foreach (var item in Model.activeCoordinators)
+                        {
+                            @if (@item.rol.Equals("Coordinador"))
+                            {
+                                <option value=@item.IDusuario>@item.nombreUsuario - @item.identificadorPrograma</option>
+                            }
+                        }
+                    </select>
 
                     <div class="d-flex">
                         <h5 class="mt-4 me-3 col-6 fw-light">Clave DGP</h5>
@@ -55,7 +72,7 @@
                             <option value="Poza Rica">Poza Rica</option>
                         </select>
                     </div>
-                    
+
                     <h5 class="fw-light mt-4">Area</h5>
                     <input type="text" name="Area" class="form-control" id="inputArea"
                         placeholder="Ej: BIOLÓGICO - AGROPECUARIA" required>
@@ -70,10 +87,6 @@
                         <input type="text" name="AnioPrograma" class="form-control" id="inputRoutineCountry"
                             placeholder="Ej: 2022" required>
                     </div>
-
-                    <h5 class="fw-light mt-4">Nombre del coordinador</h5>
-                    <input type="text" name="NombreCoordinador" class="form-control" id="inputCordinatorName"
-                        placeholder="Nombre completo" required>
 
                     <h5 class="fw-light mt-4">Correo institucional del coordinador</h5>
                     <input type="text" name="CorreoCoordinador" class="form-control" id="inputCordinatorEmail"
@@ -100,14 +113,15 @@
 
 
 <div class="modal fade" id="cancelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-     aria-hidden="true">
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">¿Cancelar creación de programa?</h1>
             </div>
             <div class="modal-body">
-                <p class="fw-light">¿Desea cancelar la creación del programa de posgrado? Los datos ingresados se perderan</p>
+                <p class="fw-light">¿Desea cancelar la creación del programa de posgrado? Los datos ingresados se
+                    perderan</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -124,4 +138,3 @@
         window.location.href = url;
     }
 </script>
-

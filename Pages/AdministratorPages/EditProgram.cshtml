@@ -26,19 +26,41 @@
                         </select>
 
                         <h5 class="fw-light mt-4">Nombre del programa</h5>
-                        <input type="text" name="InformacionBasica.NombrePrograma"
-                            value="@Model.programToEdit.InformacionBasica.NombrePrograma" class="form-control"
-                            id="inputProgramTitle" placeholder="Ej: Doctorado en ciencias agropecuarias" required>
+                        <select class="form-select me-4" name="InformacionBasica.NombrePrograma" id="inputProgramName"
+                            required>
+                            <option selected hidden value="@Model.programToEdit.InformacionBasica.NombrePrograma">@Model.programToEdit.InformacionBasica.NombrePrograma</option>
+                            @foreach (var item in Model.itemsDenominations.ItemsDenominaciones)
+                            {
+                                <option value=@item>@item</option>
+                            }
+                        </select>
+                        <h5 class="fw-light mt-4">Coordinador del Programa</h5>
+                        <select class="form-select me-4" name="idUser" id="inputId" required>
+                            @foreach (var item in Model.activeCoordinators)
+                            {
+                                @if (@item.identificadorPrograma == @Model.programToEdit.IdentificadorPrograma)
+                                {
+                                    <option selected hidden value="@item.IDusuario">@item.nombreUsuario -
+                                        @item.identificadorPrograma</option>
+                                }
+                                @if (@item.rol.Equals("Coordinador"))
+                                {
+                                    <option value=@item.IDusuario>@item.nombreUsuario - @item.identificadorPrograma</option>
+                                }
+                            }
+                        </select>
 
                         <div class="d-flex">
                             <h5 class="mt-4 me-3 col-6 fw-light">Clave DGP</h5>
                             <h5 class="mt-4 col-6 fw-light">Clave Programa</h5>
                         </div>
                         <div class="d-flex">
-                            <input type="text" value="@Model.programToEdit.InformacionBasica.ClaveDGP" name="InformacionBasica.ClaveDGP" class="form-control me-4" id="inputClaveDGP"
+                            <input type="text" value="@Model.programToEdit.InformacionBasica.ClaveDGP"
+                                name="InformacionBasica.ClaveDGP" class="form-control me-4" id="inputClaveDGP"
                                 placeholder="Ej: 311612" required>
-                            <input type="text" name="InformacionBasica.ClavePrograma" value="@Model.programToEdit.InformacionBasica.ClavePrograma" class="form-control" id="inputClavePrograma"
-                                placeholder="DCAG-13-E" required>
+                            <input type="text" name="InformacionBasica.ClavePrograma"
+                                value="@Model.programToEdit.InformacionBasica.ClavePrograma" class="form-control"
+                                id="inputClavePrograma" placeholder="DCAG-13-E" required>
                         </div>
 
                         <div class="d-flex">
@@ -47,14 +69,16 @@
                         </div>
                         <div class="d-flex">
                             <select class="form-select me-4" name="InformacionBasica.Nivel" id="inputLevel" required>
-                                <option selected hidden value="@Model.programToEdit.InformacionBasica.Nivel">@Model.programToEdit.InformacionBasica.Nivel</option>
+                                <option selected hidden value="@Model.programToEdit.InformacionBasica.Nivel">
+                                    @Model.programToEdit.InformacionBasica.Nivel</option>
                                 <option value="Diplomado de Especializacion">Diploma de Especialización</option>
                                 <option value="Título de Grado de Maestro">Título de Grado de Maestro o Maestra</option>
                                 <option value="Título de Grado de Doctor">Título de Grado de Doctor o Doctora</option>
                             </select>
 
                             <select class="form-select" name="InformacionBasica.Region" id="inputRegion" required>
-                                <option selected hidden value="@Model.programToEdit.InformacionBasica.Region">@Model.programToEdit.InformacionBasica.Region</option>
+                                <option selected hidden value="@Model.programToEdit.InformacionBasica.Region">
+                                    @Model.programToEdit.InformacionBasica.Region</option>
                                 <option value="Xalapa">Xalapa</option>
                                 <option value="Cordoba-Orizaba">Cordoba-Orizaba</option>
                                 <option value="Veracruz">Veracruz</option>
@@ -64,27 +88,31 @@
                         </div>
 
                         <h5 class="fw-light mt-4">Area</h5>
-                        <input type="text" name="InformacionBasica.Area" value="@Model.programToEdit.InformacionBasica.Area" class="form-control" id="inputArea"
-                            placeholder="Ej: BIOLÓGICO - AGROPECUARIA" required>
+                        <input type="text" name="InformacionBasica.Area" value="@Model.programToEdit.InformacionBasica.Area"
+                            class="form-control" id="inputArea" placeholder="Ej: BIOLÓGICO - AGROPECUARIA" required>
 
                         <div class="d-flex">
                             <h5 class="mt-4 me-3 col-6 fw-light">No. Depedencia</h5>
                             <h5 class="mt-4 col-6 fw-light">Año del programa</h5>
                         </div>
                         <div class="d-flex">
-                            <input type="text" name="InformacionBasica.NumDependencia" value="@Model.programToEdit.InformacionBasica.NumDependencia" class="form-control me-4" id="inputRoutineCity"
-                                placeholder="Ej: 311612" required>
-                            <input type="text" name="InformacionBasica.AnioPrograma" value="@Model.programToEdit.InformacionBasica.AnioPrograma" class="form-control" id="inputRoutineCountry"
-                                placeholder="Ej: 2022" required>
+                            <input type="text" name="InformacionBasica.NumDependencia"
+                                value="@Model.programToEdit.InformacionBasica.NumDependencia" class="form-control me-4"
+                                id="inputRoutineCity" placeholder="Ej: 311612" required>
+                            <input type="text" name="InformacionBasica.AnioPrograma"
+                                value="@Model.programToEdit.InformacionBasica.AnioPrograma" class="form-control"
+                                id="inputRoutineCountry" placeholder="Ej: 2022" required>
                         </div>
 
                         <h5 class="fw-light mt-4">Nombre del coordinador</h5>
-                        <input type="text" name="InformacionBasica.NombreCoordinador" value="@Model.programToEdit.InformacionBasica.NombreCoordinador" class="form-control" id="inputCordinatorName"
-                            placeholder="Nombre completo" required>
+                        <input type="text" name="InformacionBasica.NombreCoordinador"
+                            value="@Model.programToEdit.InformacionBasica.NombreCoordinador" class="form-control"
+                            id="inputCordinatorName" placeholder="Nombre completo" required>
 
                         <h5 class="fw-light mt-4">Correo institucional del coordinador</h5>
-                        <input type="text" name="InformacionBasica.CorreoCoordinador" value="@Model.programToEdit.InformacionBasica.CorreoCoordinador" class="form-control" id="inputCordinatorEmail"
-                            placeholder="Ej: correo@uv.mx" required>
+                        <input type="text" name="InformacionBasica.CorreoCoordinador"
+                            value="@Model.programToEdit.InformacionBasica.CorreoCoordinador" class="form-control"
+                            id="inputCordinatorEmail" placeholder="Ej: correo@uv.mx" required>
 
                         <div class="d-flex mt-5">
 

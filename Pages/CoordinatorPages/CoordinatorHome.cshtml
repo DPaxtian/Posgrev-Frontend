@@ -43,6 +43,14 @@
     </div>
 </nav>
 
+<div class=" d-flex justify-content-evenly" style="font-size: large;">
+    <p class="mt-2">Bienvenido, @Model.coordinatorInfo.nombreUsuario</p>
+    <p class="mt-2"><b>Programa:</b> @Model.programInfo.InformacionBasica.NombrePrograma</p>
+    <p class="mt-2"><b>Región:</b> @Model.programInfo.InformacionBasica.Region</p>
+    <p class="mt-2"><b>Clave:</b> @Model.programInfo.InformacionBasica.ClavePrograma</p>
+
+
+</div>
 <div class="container">
 
     <div class="container-fluid mt-3">
@@ -57,7 +65,7 @@
                         <h6> <b>Fecha de inicio: </b> @period.FechaInicio</h6>
                         <h6> <b>Fecha limite: </b> @period.FechaLimite</h6>
                         <h6 class="mb-4"> <b>Estado: </b> @period.Status</h6>
-                        <a href="/CoordinatorPages/ProgramIndicators/GeneralData" class="btn btn-primary w-100">Subir Información</a>
+                        <a asp-page="/CoordinatorPages/ProgramIndicators/GeneralData" asp-route-idProgram="@Model.coordinatorInfo.identificadorPrograma" class="btn btn-primary w-100">Subir Información</a>
                     </div>
                 </div>
             }

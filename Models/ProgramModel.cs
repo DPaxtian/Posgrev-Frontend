@@ -75,10 +75,10 @@ namespace Posgrev_Frontend.Models
     public class DatosGenerales
     {
         [JsonProperty("antecedentes")]
-        public Antecedentes? Antecedentes { get; set; }
+        public Antecedentes Antecedentes { get; set; } = new Antecedentes();
 
         [JsonProperty("adsreg")]
-        public Adsreg? Adsreg { get; set; }
+        public Adsreg Adsreg { get; set; } = new Adsreg();
 
         [JsonProperty("denominacion")]
         public string? Denominacion { get; set; }
@@ -326,5 +326,19 @@ namespace Posgrev_Frontend.Models
 
         [JsonProperty("percepcionPrograma")]
         public string? PercepcionPrograma {get; set;}
+    }
+
+
+    public partial class Denominaciones
+    {
+        [JsonProperty("items")]
+        public List<string>? ItemsDenominaciones {get; set;}
+    }
+
+
+    public partial class Adscripciones
+    {
+        [JsonProperty("items")]
+        public List<string>? ItemsAdscripciones {get; set;}
     }
 }

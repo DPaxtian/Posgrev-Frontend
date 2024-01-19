@@ -34,12 +34,13 @@ namespace Posgrev_Frontend.Logic
         }
 
 
-        public static async Task<int> SaveBasicInformation(InformacionBasica newInformation)
+        public static async Task<int> SaveBasicInformation(string idUser, InformacionBasica newInformation)
         {
             int statusCode = 500;
 
             try
             {
+                DatosUsuario coordinatorProgram = await UserLogic.GetUserDetails(idUser);
                 var information = new
                 {
                     nombrePrograma = newInformation.NombrePrograma,
@@ -50,12 +51,13 @@ namespace Posgrev_Frontend.Logic
                     area = newInformation.Area,
                     numDependencia = newInformation.NumDependencia,
                     correoCoordinador = newInformation.CorreoCoordinador,
-                    nombreCoordinador = newInformation.NombreCoordinador,
+                    nombreCoordinador = coordinatorProgram.nombreUsuario,
                     anioPrograma = newInformation.AnioPrograma
                 };
 
                 var data = new
                 {
+                    identificadorPrograma =  coordinatorProgram.identificadorPrograma,
                     informacionBasica = information
                 };
 
@@ -80,12 +82,13 @@ namespace Posgrev_Frontend.Logic
         }
 
 
-        public static async Task<int> EditProgram(ProgramModel editedInformation)
+        public static async Task<int> EditProgram(string idUser, ProgramModel editedInformation)
         {
             int statusCode = 500;
 
             try
             {
+                DatosUsuario coordinatorProgram = await UserLogic.GetUserDetails(idUser);
                 var information = new
                 {
                     nombrePrograma = editedInformation.InformacionBasica.NombrePrograma,
@@ -96,13 +99,14 @@ namespace Posgrev_Frontend.Logic
                     area = editedInformation.InformacionBasica.Area,
                     numDependencia = editedInformation.InformacionBasica.NumDependencia,
                     correoCoordinador = editedInformation.InformacionBasica.CorreoCoordinador,
-                    nombreCoordinador = editedInformation.InformacionBasica.NombreCoordinador,
+                    nombreCoordinador = coordinatorProgram.nombreUsuario,
                     anioPrograma = editedInformation.InformacionBasica.AnioPrograma
                 };
 
                 var data = new
                 {
                     activo = editedInformation.Activo,
+                    identificadorPrograma =  coordinatorProgram.identificadorPrograma,
                     informacionBasica = information
                 };
 
@@ -154,34 +158,34 @@ namespace Posgrev_Frontend.Logic
         }
 
 
-        public static async Task<int> SaveGeneralData(DatosGenerales generalData)
+        public static async Task<int> SaveGeneralData(string idProgram, DatosGenerales generalData)
         {
             int statusCode = 500;
 
             try
             {
                 
-
-
                 var generalInformation = new
                 {
-                    
                     denominacion = generalData.Denominacion,
+                    antecedentes = generalData.Antecedentes,
+                    adsreg = generalData.Adsreg,
                     nivel = generalData.Nivel,
                     modalidad = generalData.Modalidad,
                     orientacion = generalData.Orientacion,
                     paginaWeb = generalData.PaginaWeb,
                     duracion = generalData.Duracion,
                     periodosLectivos = generalData.PeriodosLectivos,
-                    periodicidadConvocatoria = generalData.PeriodicidadConvocatoria
+                    periodicidadConvocatoria = generalData.PeriodicidadConvocatoria,
+                    pronaces = generalData.Pronaces
                 };
-
                 
-
                 string dataToSend = JsonConvert.SerializeObject(generalInformation);
 
+                //Console.WriteLine(dataToSend);
+
                 HttpClient server = new HttpClient();
-                string url = "http://localhost:3000/saveGeneralData/PID-001";
+                string url = "http://localhost:3000/saveGeneralData/" + idProgram;
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
 
@@ -196,6 +200,59 @@ namespace Posgrev_Frontend.Logic
             }
 
             return statusCode;
+        }
+
+
+        public static async Task<Denominaciones> GetDenominations()
+        {
+            Denominaciones denominaciones = new Denominaciones();
+
+            try
+            {
+                HttpClient server = new HttpClient();
+                string apiUrl = "http://localhost:3000/getDenominations";
+                HttpResponseMessage responseMessage = await server.GetAsync(apiUrl);
+                string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    ApiResponseDenominations programDescerialized = JsonConvert.DeserializeObject<ApiResponseDenominations>(jsonResponse);
+                    denominaciones = programDescerialized.Denominaciones;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There is an error on GetActivePrograms" + ex);
+            }
+
+            return denominaciones;
+        }
+
+
+
+        public static async Task<Adscripciones> GetAdscriptions()
+        {
+            Adscripciones adscripciones = new Adscripciones();
+
+            try
+            {
+                HttpClient server = new HttpClient();
+                string apiUrl = "http://localhost:3000/getAdscriptions";
+                HttpResponseMessage responseMessage = await server.GetAsync(apiUrl);
+                string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    ApiResponseAdscriptions programDescerialized = JsonConvert.DeserializeObject<ApiResponseAdscriptions>(jsonResponse);
+                    adscripciones = programDescerialized.Adscripciones;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There is an error on GetActivePrograms" + ex);
+            }
+
+            return adscripciones;
         }
 
     }

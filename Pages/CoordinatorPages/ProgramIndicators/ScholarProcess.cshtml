@@ -1,0 +1,201 @@
+@page
+@model Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators.ScholarProcessModel
+@{
+    ViewData["Title"] = "Procesos Escolares - Posgrev";
+}
+
+<style>
+    .navbar {
+        background-color: #18529D;
+    }
+
+    .nav-link {
+        color: white;
+    }
+
+    .page-item {
+        width: 1000px;
+    }
+
+    a {
+        text-align: center;
+    }
+
+    .page-link {
+        background-color: #28AD56;
+        color: white;
+    }
+
+    p {
+        font-weight: bold;
+        font-size: smaller;
+        height: 0.75rem;
+    }
+
+    span {
+        font-weight: lighter;
+        font-size: smaller;
+        height: 0.75rem;
+        padding: 1rem;
+    }
+
+    h6 {
+        font-weight: lighter;
+        font-size: small;
+    }
+</style>
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page"
+                        href="/CoordinatorPages/CoordinatorHome">Evaluaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Resultados</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container-fluid">
+    <div class="container mt-4">
+        <h5>Evaluación del Posgrado</h5>
+
+        <div class="mt-4">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/GeneralData" asp-route-idProgram="@Model.IdProg">Datos Generales</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ContextProgram" asp-route-idProgram="@Model.IdProg">Compromiso</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ProgramStructure" asp-route-idProgram="@Model.IdProg">Infraestructura</a></li>
+                    <li class="page-item active"><a class="page-link">Procesos Escolares</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/StudentInfo" asp-route-idProgram="@Model.IdProg">Información del Estudiante</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/Results" asp-route-idProgram="@Model.IdProg">Resultados</a></li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <h5 class="mt-5 mb-3">Procesos Escolares</h5>
+        <form class="shadow" id="scholarProcess" method="post">
+            <input type="hidden" name="idProgram" value="@Model.IdProg" />
+
+            <div class="mt-1 ms-3 me-3">
+                <p>Proceso de admisión y selección de estudiantes:</p>
+                <h6 class="ms-3 mb-3">Documento que contenga una descripción de los siguientes puntos establecidos en su última convocatoria: <br>
+                    • Requisitos de admisión <br>
+                    • Criterios de elección aplicados (formatos de entrevistas, exámenes, actas del comité de selección, revisión del CV, protocolo, etc. según sea el caso). <br>
+                </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Procesos y programas de movilidad estudiantil:</p>
+                <h6 class="ms-3 mb-3">Documento que contenga los siguientes puntos: <br>
+                    • Mención de los programas de movilidad estudiantil con los que cuenta el programa educativo de posgrado.<br>
+                    • Realizar una descripción general acerca del proceso de convocatoria y de la selección de alumnos que son acreedores a recibir apoyo con alguno de los programas de movilidad estudiantil que mencionó el en punto anterior.  <br>
+                </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Proceso para el apoyo de condonación estudiantil por parte de la UV. (en caso de contar con estudiantes que se les brinde este apoyo):</p>
+                <h6 class="ms-3 mb-3">
+                    Documento que contenga una descripción de los siguientes puntos: <br>
+                    • Proceso para la condonación estudiantil por parte de la UV. <br>
+                </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Proceso para trámite de beca estudiantil:</p>
+                <h6 class="ms-3 mb-3">
+                   Documento que contenga los siguientes puntos: <br>
+                    • Una descripción general del proceso para el trámite de beca y en el cual se mencionen los tipos de becas que pueden obtener los estudiantes del programa educativo de posgrado.  <br>
+                </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Seguimiento de la trayectoria escolar de estudiante en el programa:</p>
+                <h6 class="ms-3 mb-3">
+                   Documento que contenga una descripción de los siguientes puntos: <br>
+                   • Estrategias o procesos del programa educativo de posgrado que contribuyan a la permanencia del estudiante en el programa.  <br>
+                   • Estrategias o procesos del programa educativo de posgrado que ayuden a monitorear la trayectoria escolar de los estudiantes. <br>
+                   • Evidencias del seguimiento individual o colegiado de la trayectoria académica de estudiantes (minutas, actas de comité tutorial, reportes de avance de tesis o trabajo terminal, evaluaciones de desempeño, portafolios). <br>
+                </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Proceso de titulación para los estudiantes:</p>
+                <h6 class="ms-3 mb-3">
+                   Documento que contenga una descripción de los siguientes puntos: <br>
+                   • Proceso de titulación de los estudiantes  <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Proceso de doble titulación (Sólo para programas que tengan esta modalidad):</p>
+                <h6 class="ms-3 mb-3">
+                   Documento que contenga una descripción de los siguientes puntos: <br>
+                   • Una descripción general acerca del proceso de doble titulación con el que cuenta el programa educativo de posgrado   <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+            
+            
+
+            <div class="d-flex justify-content-end me-3 mt-5">
+                <button type="button" class="btn btn-secondary me-2 mb-4" style="width: 200px;">
+                    Guardar como borrador
+                </button>
+
+                <button type="submit" class="btn btn-primary shadow mb-4" style="width: 250px;">
+                    Siguiente
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+</div>

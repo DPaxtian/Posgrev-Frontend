@@ -69,14 +69,12 @@
         <div class="mt-4">
             <nav>
                 <ul class="pagination">
-                    <li class="page-item active"><a class="page-link" href="#">Datos Generales</a></li>
-                    <li class="page-item"><a class="page-link"
-                            href="/CoordinatorPages/ProgramIndicators/ContextProgram">Compromiso</a></li>
-                    <li class="page-item"><a class="page-link"
-                            href="/CoordinatorPages/ProgramIndicators/ProgramStructure">Infraestructura</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Procesos Escolares</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Información del Estudiante</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Resultados</a></li>
+                    <li class="page-item active"><a class="page-link">Datos Generales</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ContextProgram" asp-route-idProgram="@Model.IdProg">Compromiso</a></li>
+                    <li class="page-item"><a class="page-link"  asp-page="/CoordinatorPages/ProgramIndicators/ProgramStructure" asp-route-idProgram="@Model.IdProg">Infraestructura</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ScholarProcess" asp-route-idProgram="@Model.IdProg">Procesos Escolares</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/StudentInfo" asp-route-idProgram="@Model.IdProg">Información del Estudiante</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/Results" asp-route-idProgram="@Model.IdProg">Resultados</a></li>
                 </ul>
             </nav>
         </div>
@@ -84,10 +82,12 @@
 
         <h5 class="mt-5 mb-3">Datos Generales del Programa</h5>
         <form class="shadow" id="generalData" method="post">
+            <input type="hidden" name="idProgram" value="@Model.IdProg" />
 
             <div class="ms-3 me-3">
                 <p>Denominación:</p>
-                <input type="text" name="Denominacion" class="form-control form-control-sm">
+                <input readonly type="text" name="Denominacion"
+                    value="@Model.programInfo.InformacionBasica?.NombrePrograma" class="form-control form-control-sm">
             </div>
 
 
@@ -96,15 +96,18 @@
                 <p>Inicio de actividades:</p>
             </div>
             <div class="d-flex ms-3 me-3">
-                <input type="date" name="DatosGenerales.Antecedentes.FechaAprobacion" class="form-control form-control-sm me-3" required>
-                <input type="date" name="DatosGenerales.Antecedentes.IniciaAct" class="form-control form-control-sm" required>
+                <input type="date" name="DatosGenerales.Antecedentes.FechaAprobacion"
+                    class="form-control form-control-sm me-3" required>
+                <input type="date" name="DatosGenerales.Antecedentes.InicioAct" class="form-control form-control-sm"
+                    required>
             </div>
 
 
             <div class="ms-3 me-3 mt-3">
                 <p>Nivel:</p>
                 <select name="Nivel" class="form-select form-select-sm" required>
-                    <option selected disabled value="">Seleccione una opción</option>
+                    <option selected hidden value="@Model.programInfo.InformacionBasica?.Nivel">
+                        @Model.programInfo.InformacionBasica?.Nivel</option>
                     <option value="Diplomado de Especializacion">Diploma de Especialización</option>
                     <option value="Título de Grado de Maestro">Título de Grado de Maestro o Maestra</option>
                     <option value="Título de Grado de Doctor">Título de Grado de Doctor o Doctora</option>
@@ -117,13 +120,23 @@
                 <p>Región:</p>
             </div>
             <div class="d-flex ms-3 me-3">
-                <select class="form-select form-select-sm me-3" name="Adscripcion" required>
-                    <option selected disabled value="">Seleccione una opción</option>
-                    <option value="prueba">Prueba</option>
-                </select>
-                <select class="form-select form-select-sm" name="Region" required>
-                    <option selected disabled value="">Seleccione una opción</option>
-                    <option value="prueba">prueba</option>
+
+                <input class="form-control me-4" name="DatosGenerales.Adsreg.Adscripcion" list="adscriptionsOptions" placeholder="Escriba para buscar la adscripcion">
+                <datalist id="adscriptionsOptions">
+                    @foreach (var item in Model.adscripciones?.ItemsAdscripciones)
+                    {
+                        <option value=@item>@item</option>
+                    }
+                </datalist>
+
+                <select class="form-select form-select-sm" name="DatosGenerales.Adsreg.Region" required>
+                    <option selected hidden value="@Model.programInfo.InformacionBasica.Region">
+                        @Model.programInfo.InformacionBasica.Region</option>
+                    <option value="Xalapa">Xalapa</option>
+                    <option value="Cordoba-Orizaba">Cordoba-Orizaba</option>
+                    <option value="Veracruz">Veracruz</option>
+                    <option value="Coatzacoalcos">Coatzacoalcos</option>
+                    <option value="Poza Rica">Poza Rica</option>
                 </select>
             </div>
 
@@ -165,7 +178,10 @@
                     Adjuntar archivo PDF <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" name="RegistroProfesiones" id="formFileSm" type="file" required>
+
+                <input class="form-control form-control-sm" name="RegistroProfesiones" id="formFileSm" type="file"
+                    required>
+                
             </div>
 
 
@@ -213,51 +229,51 @@
                     Adjuntar archivo EXCEL <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" name="CuotaRecuperacion" id="formFileSm" type="file" required>
+                <input class="form-control form-control-sm" name="CuotaRecuperacion" id="formFileSm" type="file"
+                    required>
             </div>
 
 
             <div class="ms-3 me-3 mt-3 mb-4">
                 <p>PRONACES:</p>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="pronaces1" value="Agua">
+                    <input class="form-check-input" type="checkbox" id="pronaces1" name="pronaces" value="Agua">
                     <label class="form-check-label" for="pronaces1">Agua</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="pronaces2" value="Salud">
+                    <input class="form-check-input" type="checkbox" id="pronaces2" name="pronaces" value="Salud">
                     <label class="form-check-label" for="pronaces2">Salud</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="pronaces3" value="Seguridad Humana">
+                    <input class="form-check-input" type="checkbox" id="pronaces3" name="pronaces" value="Seguridad Humana">
                     <label class="form-check-label" for="pronaces3">Seguridad Humana</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="pronaces4" value="Cultura">
+                    <input class="form-check-input" type="checkbox" id="pronaces4" name="pronaces" value="Cultura">
                     <label class="form-check-label" for="pronaces4">Cultura</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="pronaces5" value="Sistemas socio-ecológicos">
+                    <input class="form-check-input" type="checkbox" id="pronaces5" name="pronaces" value="Sistemas socio-ecológicos">
                     <label class="form-check-label" for="pronaces5">Sistemas socio-ecológicos</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="pronaces6" value="Educación">
+                    <input class="form-check-input" type="checkbox" id="pronaces6" name="pronaces" value="Educación">
                     <label class="form-check-label" for="pronaces6">Educación</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="pronaces7" value="Vivienda">
+                    <input class="form-check-input" type="checkbox" id="pronaces7" name="pronaces" value="Vivienda">
                     <label class="form-check-label" for="pronaces7">Vivienda</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="pronaces8" value="Soberanía alimentaria">
+                    <input class="form-check-input" type="checkbox" id="pronaces8" name="pronaces" value="Soberanía alimentaria">
                     <label class="form-check-label" for="pronaces8">Soberanía alimentaria</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="pronaces9" value="Energia y cambio climático">
+                    <input class="form-check-input" type="checkbox" id="pronaces9" name="pronaces" value="Energia y cambio climático">
                     <label class="form-check-label" for="pronaces9">Energia y cambio climático</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="pronaces10"
-                        value="Agentes tóxicos y procesos contaminantes">
+                    <input class="form-check-input" type="checkbox" id="pronaces10" name="pronaces" value="Agentes tóxicos y procesos contaminantes">
                     <label class="form-check-label" for="pronaces10">Agentes tóxicos y procesos contaminantes</label>
                 </div>
             </div>

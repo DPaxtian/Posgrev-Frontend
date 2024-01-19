@@ -1,0 +1,401 @@
+@page
+@model Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators.StudentInfoModel
+@{
+    ViewData["Title"] = "Procesos Escolares - Posgrev";
+}
+
+<style>
+    .navbar {
+        background-color: #18529D;
+    }
+
+    .nav-link {
+        color: white;
+    }
+
+    .page-item {
+        width: 1000px;
+    }
+
+    a {
+        text-align: center;
+    }
+
+    .page-link {
+        background-color: #28AD56;
+        color: white;
+    }
+
+    p {
+        font-weight: bold;
+        font-size: smaller;
+        height: 0.75rem;
+    }
+
+    span {
+        font-weight: lighter;
+        font-size: smaller;
+        height: 0.75rem;
+        padding: 1rem;
+    }
+
+    h6 {
+        font-weight: lighter;
+        font-size: small;
+    }
+</style>
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page"
+                        href="/CoordinatorPages/CoordinatorHome">Evaluaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Resultados</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container-fluid">
+    <div class="container mt-4">
+        <h5>Evaluación del Posgrado</h5>
+
+        <div class="mt-4">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/GeneralData" asp-route-idProgram="@Model.IdProg">Datos Generales</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ContextProgram" asp-route-idProgram="@Model.IdProg">Compromiso</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ProgramStructure" asp-route-idProgram="@Model.IdProg">Infraestructura</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/ScholarProcess" asp-route-idProgram="@Model.IdProg">Procesos Escolares</a></li>
+                    <li class="page-item active"><a class="page-link" >Información del Estudiante</a></li>
+                    <li class="page-item"><a class="page-link" asp-page="/CoordinatorPages/ProgramIndicators/Results" asp-route-idProgram="@Model.IdProg">Resultados</a></li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <h5 class="mt-5 mb-3">Procesos Escolares</h5>
+        <form class="shadow" id="generalData" method="post">
+            <input type="hidden" name="idProgram" value="@Model.IdProg" />
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Estrategias Anti plagio:</p>
+                <h6 class="ms-3 mb-3">
+                   Documento con una descripción acerca de: <br>
+                   • Instrumentos y/o estrategias utilizadas por el programa educativo de posgrado para detectar plagio en publicaciones y trabajos de tesis.  <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Estudio de pertinencia y factibilidad social:</p>
+                <h6 class="ms-3 mb-3">
+                   Documento en dónde se expongan lo siguiente: <br>
+                   •Estudio de pertinencia y factibilidad social realizado para la creación del plan de estudios del programa educativo de posgrado operante, así como para los programas que hayan estado inactivos y retomen operabilidad. (Este estudio debe estar basado en lo indicado en la Guía para la creación y actualización de planes y programas educativos de posgrado (UEP-GE-G-01)).  <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Demanda del programa educativo de posgrado:</p>
+                <h6 class="mb-3">
+                    • Indicar número total de aspirantes en la última convocatoria al programa educativo de posgrado
+                </h6>
+                <input type="number" class="form-control form-control-sm" required>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                   • Nombre del aspirante  <br>
+                   • Edad del aspirante <br>
+                   • Nacionalidad del aspirante <br>
+                   • Lugar de origen del aspirante <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Número de aspirantes aceptados en el programa educativo de posgrado:</p>
+                <h6 class="mb-3">
+                    • Indicar el número total de aspirantes con derecho a cursar el programa educativo de posgrado en la última convocatoria al programa educativo de posgrado 
+                </h6>
+                <input type="number" class="form-control form-control-sm" required>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                   • Nombre del aspirante  <br>
+                   • Edad del aspirante <br>
+                   • Nacionalidad del aspirante <br>
+                   • Lugar de origen del aspirante <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Tasa de titulación:</p>
+                <h6 class="mb-3">
+                    • Indicar la tasa de titulación del programa educativo de posgrado por generación. 
+                </h6>
+                <input type="text" class="form-control form-control-sm" required>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                   • Nombre alumno titulado  <br>
+                   • Nombre del programa educativo <br>
+                   • Generiación <br>
+                   • Fecha de titulación <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>Tasa de eficiencia terminal:</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                   • Tasa de eficiencia terminal por generación.  <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+
+                <h6 class="ms-3 mb-3 mt-3">
+                   • Documento del análisis de la eficiencia terminal, considerando el mayor número de cohortes generacionales del programa <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>	Movilidad estudiantil por generaciones:</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                    • Nombre del alumno. <br>
+                    • Matrícula. <br>
+                    • Nombre del programa educativo de posgrado. <br>
+                    • Generación. <br>
+                    • Tipo de programa de movilidad en el que participó. <br>
+                    • Modalidad de movilidad (nacional o internacional). <br>
+                    • Tipo de movilidad (investigación o por E.E.). <br>
+                    • Destino de la movilidad. <br>
+                    • Duración en meses de la movilidad. <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>	Apoyo de condonación estudiantil (en caso de contar con estudiantes que se les brinde este apoyo):</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                    • Nombre del alumno con apoyo de condonación. <br>
+                    • Matrícula del alumno <br>
+                    • Nombre del programa educativo de posgrado. <br>
+                    • Generación. <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>	Becas estudiantiles:</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                    • Nombre del alumno con beca. <br>
+                    • Matrícula del alumno <br>
+                    • Nombre del programa educativo de posgrado. <br>
+                    • Generación. <br>
+                    • Tipo de beca (Institucional o CONAHCYT). <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>	Bajas estudiantiles:</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                    • Nombre del alumno. <br>
+                    • Matrícula <br>
+                    • Generación. <br>
+                    • Semestre que pidió la baja. <br>
+                    • Tipo de baja estudiantil (Temporal o Definitiva) <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p>	Colaboración de los egresados con los sectores de la sociedad:</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Documento que contenga una descripción de los siguientes puntos: <br>
+                    • Descripción de actividades de comunicación y difusión sobre resultados de investigación y/o proyectos de intervención en los que hayan participado estudiantes y egresados. <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p> Cuota de recuperación por generación:</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                    • Nombre del programa. <br>
+                    • Generación. <br>
+                    • Monto total de la cuota de recuperación. <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p> Redes de personas egresadas:</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Documento que contenga una descripción de los siguientes puntos: <br>
+                    • Procedimientos institucionales para la generación de redes de personas egresadas del programa educativo de posgrado. <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p> Producción académica de las Líneas de Generación y Aplicación del Conocimiento (LGAC) relacionadas con el programa por parte de los profesores de tiempo completo:</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                    • Título del trabajo <br>
+                    • Nombre del académico a cargo del proyecto <br>
+                    • Nombre del alumno que desarrolla el proyecto <br>
+                    • Generación <br>
+                    • Indicar las LGAC del proyecto que se apegan a las del programa educativo de posgrado. <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p> Dirección de tesis relación estudiante/profesor:</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                    • Nombre del estudiante. <br>
+                    • Matrícula del estudiante. <br>
+                    • Generación. <br>
+                    • Nombre del profesor que ha sido asignado al estudiante para dirección de tesis. <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p> Tutorías Relación estudiante/profesor:</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Tabla en Excel con la siguiente información: <br>
+                    • Nombre del estudiante. <br>
+                    • Matrícula del estudiante. <br>
+                    • Generación. <br>
+                    • Nombre del profesor que ha sido asignado al estudiante como su tutor. <br>
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo EXCEL <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="mt-4 ms-3 me-3">
+                <p> Comités de graduación.:</p>
+                <h6 class="ms-3 mb-3 mt-3">
+                   Documento que compruebe: <br>
+                    • Composición plural de los comités de graduación (al menos, con una persona externa al programa).
+                  </h6>
+                <h6 class="mb-3">
+                    Adjuntar archivo PDF <br>
+                    Tamaño maximo 20 MB
+                </h6>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+            </div>
+
+
+            <div class="d-flex justify-content-end me-3 mt-4">
+                <button type="button" class="btn btn-secondary me-2 mb-4" style="width: 200px;">
+                    Guardar como borrador
+                </button>
+
+                <button type="submit" class="btn btn-primary shadow mb-4" style="width: 250px;">
+                    Siguiente
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
