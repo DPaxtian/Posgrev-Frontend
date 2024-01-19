@@ -63,26 +63,29 @@
 <div class="container-fluid mt-3" id="programCard">
     @foreach (var user in Model.RegisteredUsers)
     {
-        <div class="card mt-2 mb-2">
-            <div class="card-body">
-                <div class="d-flex">
-                    <!-- Mostrando solo el nombre en la parte superior -->
-                    <h5 class="card-title col-11">
-                        Nombre: @(user.nombreUsuario ?? "No disponible")
-                    </h5>
-                    <button type="button" class="btn btn-outline-primary" onclick="editUser('@user.IDusuario')">Editar</button>
-                    <button type="button" class="btn btn-outline-primary" onclick="deleteUser(@(user.IDusuario ?? -1))">Borrar</button>
-                </div>
-                <div class="d-flex user-info">
-                    <!-- Mostrando solo el rol debajo -->
-                    <span class="me-4 rol">Rol: @(user.rol ?? "No disponible")</span>
-                    <span class="me-4"> Identificador de programa: @(user.identificadorPrograma ?? "Sin identificador de programa")</span>
-                </div>
-                <div class="d-flex">
-                    <!-- ... más elementos si es necesario ... -->
+        if (user.rol != "SuperAdministrador")
+        {
+            <div class="card mt-2 mb-2">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <!-- Mostrando solo el nombre en la parte superior -->
+                        <h5 class="card-title col-11">
+                            Nombre: @(user.nombreUsuario ?? "No disponible")
+                        </h5>
+                        <button type="button" class="btn btn-outline-primary" onclick="editUser('@user.IDusuario')">Editar</button>
+                        <button type="button" class="btn btn-outline-primary" onclick="deleteUser(@(user.IDusuario ?? -1))">Borrar</button>
+                    </div>
+                    <div class="d-flex user-info">
+                        <!-- Mostrando solo el rol debajo -->
+                        <span class="me-4 rol">Rol: @(user.rol ?? "No disponible")</span>
+                        <span class="me-4"> Identificador de programa: @(user.identificadorPrograma ?? "Sin identificador de programa")</span>
+                    </div>
+                    <div class="d-flex">
+                        <!-- ... más elementos si es necesario ... -->
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     }
 </div>
 
