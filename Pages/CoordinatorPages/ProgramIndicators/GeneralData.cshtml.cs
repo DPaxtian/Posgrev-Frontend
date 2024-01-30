@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Posgrev_Frontend.Logic;
 using Posgrev_Frontend.Models;
+using System.Reflection;
 
 namespace Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators
 {
@@ -73,7 +74,7 @@ namespace Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators
 
             if (statusCode == 200)
             {
-                return RedirectToPage("/CoordinatorPages/ProgramIndicators/ContextProgram");
+                return RedirectToPage("/CoordinatorPages/ProgramIndicators/ContextProgram", new {idProgram});
             }
             else
             {
