@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+//using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Posgrev_Frontend.Models
 {

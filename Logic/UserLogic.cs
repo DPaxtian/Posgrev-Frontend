@@ -81,37 +81,45 @@ namespace Posgrev_Frontend.Logic
             return statusCode;
         }
 
-        public static async Task<bool> AuthenticateUser(string userName, string password)
+        public static async Task<bool> AuthenticateUser(string nombreUsuario, string password)
         {
             try
             {
-                var information = new
-                {
-                    nombreUsuario = userName,
-                    contrasena = password
-                };
-
-                string dataToSend = JsonConvert.SerializeObject(information);
-
                 using (HttpClient server = new HttpClient())
                 {
-                    string url = "http://localhost:4000/authenticate";
-                    HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
-                    HttpResponseMessage responseMessage = await server.PostAsync(url, contentToSend);
+                    string url = $"http://localhost:4000/authenticate/{nombreUsuario}/{password}";
+                    HttpResponseMessage responseMessage = await server.GetAsync(url);
 
                     if (responseMessage.IsSuccessStatusCode)
                     {
-                        string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
-                        var authResult = JsonConvert.DeserializeAnonymousType(jsonResponse, new { usuario = new { rol = "" } });
+                        // Log para verificar que la autenticación fue exitosa
+                        Console.WriteLine("Authentication successful");
 
-                        // Puedes procesar el resultado de la autenticación aquí si es necesario
+                        // Intenta obtener el rol sin retraso
+                        string userRole = await UserLogic.GetRole(nombreUsuario);
 
-                        // Devuelve true si la autenticación fue exitosa
-                        return true;
+                        // Log para verificar el rol obtenido
+                        Console.WriteLine($"User role obtained: {userRole}");
+
+                        // Verifica si la obtención del rol es exitosa antes de redirigir
+                        if (!string.IsNullOrEmpty(userRole))
+                        {
+                            // Puedes procesar el resultado de la autenticación aquí si es necesario
+
+                            // Devuelve true si la autenticación y obtención del rol fueron exitosas
+                            return true;
+                        }
+                        else
+                        {
+                            // Autenticación exitosa pero no se pudo obtener el rol
+                            Console.WriteLine("Could not retrieve user role");
+                            return false;
+                        }
                     }
                     else
                     {
                         // Autenticación fallida
+                        Console.WriteLine("Authentication failed");
                         return false;
                     }
                 }
@@ -122,6 +130,9 @@ namespace Posgrev_Frontend.Logic
                 return false;
             }
         }
+
+
+
         public static async Task<int> DeleteUser(string userId)
         {
             int statusCode = 500;
@@ -213,10 +224,45 @@ namespace Posgrev_Frontend.Logic
 
             return userObtained;
         }
+        public static async Task<string?> GetRole(string nombreUsuario)
+        {
+            try
+            {
+                using (HttpClient server = new HttpClient())
+                {
+                    string url = $"http://localhost:4000/getRole/{nombreUsuario}";
+                    Console.WriteLine($"URL de solicitud: {url}");
+                    HttpResponseMessage responseMessage = await server.GetAsync(url);
 
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+                        var userRole = JsonConvert.DeserializeAnonymousType(jsonResponse, new { rol = "" });
 
-
+                        if (!string.IsNullOrEmpty(userRole.rol))
+                        {
+                            Console.WriteLine("User role obtained: " + userRole.rol);
+                            return userRole.rol;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Could not retrieve user role");
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Could not retrieve user role");
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There is an error on GetRole: " + ex);
+                return null;
+            }
+        }
 
     }
 }
-
