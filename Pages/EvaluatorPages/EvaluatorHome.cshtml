@@ -1,0 +1,37 @@
+﻿@page
+@model Posgrev_Frontend.Pages.EvaluatorPages.EvaluatorHomeModel
+@{
+    ViewData["Title"] = "Inicio de Evaluador";
+}
+
+<style>
+    .card {
+        cursor: pointer;
+        border-radius: 10px;
+    }
+    .card-body {
+        border-color: grey;
+    }
+    .navbar {
+        background-color: #18529D;
+    }
+    .nav-link {
+        color: white;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page"
+                       href="/EvaluatorPages/EvaluatorHome">Evaluaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Resultados</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
