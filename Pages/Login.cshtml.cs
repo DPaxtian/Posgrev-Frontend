@@ -25,13 +25,13 @@ namespace Posgrev_Frontend.Pages
 
                 if (isAuthenticated)
                 {
-                    // Si la autenticación es exitosa, intenta obtener el rol
+                    // Si la autenticaciï¿½n es exitosa, intenta obtener el rol
                     string userRole = await UserLogic.GetRole(UserName);
 
-                    // Verifica si la obtención del rol es exitosa antes de redirigir
+                    // Verifica si la obtenciï¿½n del rol es exitosa antes de redirigir
                     if (!string.IsNullOrEmpty(userRole))
                     {
-                        // Redirige según el rol
+                        // Redirige segï¿½n el rol
                         if (userRole.Equals("SuperAdministrador", StringComparison.OrdinalIgnoreCase))
                         {
                             return RedirectToPage("/AdministratorPages/AdministratorUser");
@@ -46,19 +46,19 @@ namespace Posgrev_Frontend.Pages
                         }
                         else if (userRole.Equals("Coordinador", StringComparison.OrdinalIgnoreCase))
                         {
-                            return RedirectToPage("/CoordinatorPages/CoordinatorHome");
+                            return RedirectToPage("/CoordinatorPages/CoordinatorHome", new {UserName});
                         }
                     }
                     else
                     {
-                        // Autenticación exitosa pero no se pudo obtener el rol
+                        // Autenticaciï¿½n exitosa pero no se pudo obtener el rol
                         ModelState.AddModelError(string.Empty, "Could not retrieve user role");
                         return Page();
                     }
                 }
                 else
                 {
-                    // Autenticación fallida, muestra un mensaje de error
+                    // Autenticaciï¿½n fallida, muestra un mensaje de error
                     ModelState.AddModelError(string.Empty, "Invalid username or password");
                     return Page();
                 }

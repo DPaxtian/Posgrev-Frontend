@@ -82,8 +82,11 @@
 
 
         <h5 class="mt-5 mb-3">Procesos Escolares</h5>
-        <form class="shadow" id="scholarProcess" method="post">
+        <form class="shadow" id="scholarProcess" enctype="multipart/form-data" method="post">
             <input type="hidden" name="idProgram" value="@Model.IdProg" />
+            <input type="hidden" name="Username" value="@Model.Username" />
+            <input type="hidden" name="ParentFolderId" value="@Model.ParentFolderId" />
+            <input type="hidden" name="CategoryFolderId" value="@Model.CategoryFolderId" />
 
             <div class="mt-1 ms-3 me-3">
                 <p>Proceso de admisión y selección de estudiantes:</p>
@@ -95,7 +98,7 @@
                     Adjuntar archivo PDF <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+                <input class="form-control form-control-sm" name="ProcesoAdmision" id="formFileSm" type="file" accept="application/pdf" required>
             </div>
 
 
@@ -109,7 +112,7 @@
                     Adjuntar archivo PDF <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+                <input class="form-control form-control-sm" name="ProcesoMovilidad" id="formFileSm" type="file" accept="application/pdf" required>
             </div>
 
 
@@ -123,7 +126,7 @@
                     Adjuntar archivo PDF <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+                <input class="form-control form-control-sm" name="ProcesoCondonacion" id="formFileSm" type="file" accept="application/pdf" required>
             </div>
 
             <div class="mt-4 ms-3 me-3">
@@ -136,7 +139,7 @@
                     Adjuntar archivo PDF <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+                <input class="form-control form-control-sm" name="ProcesoBeca" id="formFileSm" type="file" accept="application/pdf" required>
             </div>
 
 
@@ -152,7 +155,7 @@
                     Adjuntar archivo PDF <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+                <input class="form-control form-control-sm" name="TrayectoriaEscolar" id="formFileSm" type="file" accept="application/pdf" required>
             </div>
 
 
@@ -166,7 +169,7 @@
                     Adjuntar archivo PDF <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+                <input class="form-control form-control-sm" name="ProcesoTitulacion" id="formFileSm" type="file" accept="application/pdf" required>
             </div>
 
 
@@ -180,17 +183,18 @@
                     Adjuntar archivo PDF <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+                <input class="form-control form-control-sm" name="ProcesoDobleTitulacion" id="formFileSm" type="file" accept="application/pdf" required>
             </div>
             
             
 
             <div class="d-flex justify-content-end me-3 mt-5">
-                <button type="button" class="btn btn-secondary me-2 mb-4" style="width: 200px;">
+                <input type="hidden" name="status" id="status" value="" />
+                <button type="button" class="btn btn-secondary me-2 mb-4" style="width: 200px;" onclick="saveData('Borrador')">
                     Guardar como borrador
                 </button>
 
-                <button type="submit" class="btn btn-primary shadow mb-4" style="width: 250px;">
+                <button type="button" class="btn btn-primary shadow mb-4" style="width: 250px;" onclick="saveData('Completado')">
                     Siguiente
                 </button>
             </div>
@@ -199,3 +203,11 @@
     </div>
 
 </div>
+
+
+<script>
+    function saveData(status) {
+        document.getElementById('status').value = status;
+        document.getElementById('scholarProcess').submit();
+    }
+</script>

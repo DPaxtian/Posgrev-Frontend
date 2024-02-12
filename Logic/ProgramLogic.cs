@@ -57,7 +57,7 @@ namespace Posgrev_Frontend.Logic
 
                 var data = new
                 {
-                    identificadorPrograma =  coordinatorProgram.identificadorPrograma,
+                    identificadorPrograma = coordinatorProgram.identificadorPrograma,
                     informacionBasica = information
                 };
 
@@ -106,7 +106,7 @@ namespace Posgrev_Frontend.Logic
                 var data = new
                 {
                     activo = editedInformation.Activo,
-                    identificadorPrograma =  coordinatorProgram.identificadorPrograma,
+                    identificadorPrograma = coordinatorProgram.identificadorPrograma,
                     informacionBasica = information
                 };
 
@@ -158,15 +158,16 @@ namespace Posgrev_Frontend.Logic
         }
 
 
-        public static async Task<int> SaveGeneralData(string idProgram, DatosGenerales generalData)
+        public static async Task<int> SaveGeneralData(string idProgram, DatosGenerales generalData, string status)
         {
             int statusCode = 500;
 
             try
             {
-                
+
                 var generalInformation = new
                 {
+                    estado = status,
                     denominacion = generalData.Denominacion,
                     antecedentes = generalData.Antecedentes,
                     adsreg = generalData.Adsreg,
@@ -177,12 +178,12 @@ namespace Posgrev_Frontend.Logic
                     duracion = generalData.Duracion,
                     periodosLectivos = generalData.PeriodosLectivos,
                     periodicidadConvocatoria = generalData.PeriodicidadConvocatoria,
-                    pronaces = generalData.Pronaces
+                    pronaces = generalData.Pronaces,
+                    registroProfesiones = generalData.RegistroProfesiones,
+                    cuotaRecuperacion = generalData.CuotaRecuperacion
                 };
-                
-                string dataToSend = JsonConvert.SerializeObject(generalInformation);
 
-                //Console.WriteLine(dataToSend);
+                string dataToSend = JsonConvert.SerializeObject(generalInformation);
 
                 HttpClient server = new HttpClient();
                 string url = "http://localhost:3000/saveGeneralData/" + idProgram;
@@ -197,6 +198,217 @@ namespace Posgrev_Frontend.Logic
             catch (Exception ex)
             {
                 Console.WriteLine("There was an error saving the general data" + ex);
+            }
+
+            return statusCode;
+        }
+
+
+        public static async Task<int> SaveContextProgram(string idProgram, Compromiso info, string status)
+        {
+            int statusCode = 500;
+
+            try
+            {
+
+                var generalInformation = new
+                {
+                    estado = status,
+                    compromisoPosgrado = info.CompromisoPosgrado,
+                    vinculacion = info.Vinculacion,
+                    actividadesRetribucion = info.ActividadesRetribucion
+                };
+
+                string dataToSend = JsonConvert.SerializeObject(generalInformation);
+
+                HttpClient server = new HttpClient();
+                string url = "http://localhost:3000/saveProgramContext/" + idProgram;
+                HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    statusCode = 200;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an error saving the general data" + ex);
+            }
+
+            return statusCode;
+        }
+
+
+
+        public static async Task<int> SaveProgramInfrastucture(string idProgram, InfraestructuraPrograma infrastucture, string status)
+        {
+            int statusCode = 500;
+
+            try
+            {
+
+                var programInfrastucture = new
+                {
+                    estado = status,
+                    nucleoAcadBas = infrastucture.NucleoAcadBas,
+                    fechaActualizacionPlan = infrastucture.FechaActualizacionPlan,
+                    cambiosPlan = infrastucture.CambiosPlan,
+                    planEstudios = infrastucture.PlanEstudios,
+                    mapaCurricular = infrastucture.MapaCurricular,
+                    lgac = infrastucture.Lgac,
+                    infraestructuraPrograma = infrastucture.InfraestrucPrograma,
+                    actaConsejoConsultivo = infrastucture.ActaConsejoConsultivo,
+                    actaConsejoArea = infrastucture.ActaConsejoArea,
+                    actaActualizacionPlan = infrastucture.ActaActualizacionPlan
+                };
+
+                string dataToSend = JsonConvert.SerializeObject(programInfrastucture);
+
+                HttpClient server = new HttpClient();
+                string url = "http://localhost:3000/saveProgramInfrastucture/" + idProgram;
+                HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    statusCode = 200;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an error saving the programInfrastucture" + ex);
+            }
+
+            return statusCode;
+        }
+
+
+
+        public static async Task<int> SaveScholarProcess(string idProgram, ProcesosEscolares scholarInfo, string status)
+        {
+            int statusCode = 500;
+
+            try
+            {
+
+                var scholarProcess = new
+                {
+                    estado = status,
+                    procesoAdmision = scholarInfo.ProcesoAdmision,
+                    procesoMovilidad = scholarInfo.ProcesoMovilidad,
+                    procesoCondonacion = scholarInfo.ProcesoCondonacion,
+                    procesoBeca = scholarInfo.ProcesoBeca,
+                    trayectoriaEscolar = scholarInfo.TrayectoriaEscolar,
+                    procesoTitulacion = scholarInfo.ProcesoTitulacion,
+                    procesoDobleTitulacion = scholarInfo.ProcesoDobleTitulacion
+                };
+
+                string dataToSend = JsonConvert.SerializeObject(scholarProcess);
+
+                HttpClient server = new HttpClient();
+                string url = "http://localhost:3000/saveScholarProcess/" + idProgram;
+                HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    statusCode = 200;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an error saving the scholar process" + ex);
+            }
+
+            return statusCode;
+        }
+
+
+        public static async Task<int> SaveStudentInfo(string idProgram, InformacionSeguimiento studentInfo, string status)
+        {
+            int statusCode = 500;
+
+            try
+            {
+
+                var info = new
+                {
+                    estado = status,
+                    demanda = studentInfo.Demanda,
+                    aspirantesSeleccionados = studentInfo.AspirantesSeleccionados,
+                    tasaTitulacion = studentInfo.TasaTitulacion,
+                    tasaTerminal = studentInfo.TasaTerminal,
+                    estrategiasAntiplagio = studentInfo.EstrategiasAntiplagio,
+                    estudioFactibilidad = studentInfo.EstudioFactibilidad,
+                    movilidadEstudiantil = studentInfo.MovilidadEstudiantil,
+                    apoyoCondonacion = studentInfo.ApoyoCondonacion,
+                    becasEstudiantiles = studentInfo.BecasEstudiantiles,
+                    bajasEstudiantiles = studentInfo.BajasEstudiantiles,
+                    colabSecSoc = studentInfo.ColabSecSoc,
+                    cuotaRecuperacionGeneracion = studentInfo.CuotaRecuperacionGeneracion,
+                    redEgresados = studentInfo.RedEgresados,
+                    produccionLgac = studentInfo.DireccionLgac,
+                    direccionTesis = studentInfo.DireccionTesis,
+                    tutoriasProfEst = studentInfo.TutoriasProfEst,
+                    comiteGraduacion = studentInfo.ComiteGraduacion
+                };
+
+                string dataToSend = JsonConvert.SerializeObject(info);
+
+                Console.WriteLine(dataToSend);
+
+                HttpClient server = new HttpClient();
+                string url = "http://localhost:3000/saveStudentInfo/" + idProgram;
+                HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    statusCode = 200;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an error saving the studentInfo" + ex);
+            }
+
+            return statusCode;
+        }
+
+
+        public static async Task<int> SaveResults(string idProgram, Resultados resultsInfo, string status)
+        {
+            int statusCode = 500;
+
+            try
+            {
+
+                var info = new
+                {
+                    estado = status,
+                    percepcionPrograma = resultsInfo.PercepcionPrograma,
+                    planMejora = resultsInfo.PlanMejora,
+                    reporteAutoeval = resultsInfo.ReporteAutoeval
+                };
+
+                string dataToSend = JsonConvert.SerializeObject(info);
+
+                Console.WriteLine(dataToSend);
+
+                HttpClient server = new HttpClient();
+                string url = "http://localhost:3000/saveResults/" + idProgram;
+                HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    statusCode = 200;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an error saving the studentInfo" + ex);
             }
 
             return statusCode;

@@ -258,7 +258,7 @@ namespace Posgrev_Frontend.Models
 
     public partial class TasaTitulacion
     {
-        [JsonProperty("porcentajetasaTitulacion")]
+        [JsonProperty("porcentajeTasaTitulacion")]
         public string? PorcentajeTasaTitulacion {get; set;}
 
         [JsonProperty("informacionTitulados")]

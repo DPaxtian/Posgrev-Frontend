@@ -1,7 +1,7 @@
 @page
 @model Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators.ResultsModel
 @{
-    ViewData["Title"] = "Procesos Escolares - Posgrev";
+    ViewData["Title"] = "Resultados - Posgrev";
 }
 
 <style>
@@ -82,8 +82,11 @@
 
 
         <h5 class="mt-5 mb-3">Resultados</h5>
-        <form class="shadow" id="generalData" method="post">
+        <form class="shadow" id="results" enctype="multipart/form-data" method="post">
             <input type="hidden" name="idProgram" value="@Model.IdProg" />
+            <input type="hidden" name="Username" value="@Model.Username" />
+            <input type="hidden" name="ParentFolderId" value="@Model.ParentFolderId" />
+            <input type="hidden" name="CategoryFolderId" value="@Model.CategoryFolderId" />
 
             <div class="ms-3 me-3 mt-3">
                 <p>Reporte generado por el sistema de autoevaluación.</p>
@@ -91,12 +94,11 @@
                    Documento o reporte que indique: <br>
                    • Resultado de evaluación anterior (siempre y cuando ya se haya realizado un ejercicio de evaluación del programa educativo de posgrado anteriormente).   <br>
                 </h6>
-                <input type="text" class="form-control form-control-sm" required>
                 <h6 class="mb-3 mt-3">
                     Adjuntar archivo PDF <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+                <input class="form-control form-control-sm" name="PlanMejora" id="formFileSm" type="file" accept="application/pdf" required>
             </div>
 
             
@@ -105,7 +107,7 @@
                 <h6 class="ms-3 mb-3">
                 Describir como percibe la operatividad general de su programa educativo de posgrado
                 </h6>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+                <textarea class="form-control" name="PercepcionPrograma" id="exampleFormControlTextarea1" rows="2"></textarea>
             </div>
 
 
@@ -119,17 +121,18 @@
                     Adjuntar archivo PDF <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" id="formFileSm" type="file" required>
+                <input class="form-control form-control-sm" name="ReporteAutoeval" id="formFileSm" type="file" accept="application/pdf" required>
             </div>
 
 
             <div class="d-flex justify-content-end me-3 mt-4">
-                <button type="button" class="btn btn-secondary me-2 mb-4" style="width: 200px;">
+                <input type="hidden" name="status" id="status" value="" />
+                <button type="button" class="btn btn-secondary me-2 mb-4" style="width: 200px;" onclick="saveData('Borrador')">
                     Guardar como borrador
                 </button>
 
-                <button type="submit" class="btn btn-primary shadow mb-4" style="width: 250px;">
-                    Siguiente
+                <button type="button" class="btn btn-primary shadow mb-4" style="width: 250px;" onclick="saveData('Completado')">
+                    Finalizar
                 </button>
             </div>
 
@@ -138,3 +141,11 @@
     </div>
 
 </div>
+
+
+<script>
+    function saveData(status) {
+        document.getElementById('status').value = status;
+        document.getElementById('results').submit();
+    }
+</script>

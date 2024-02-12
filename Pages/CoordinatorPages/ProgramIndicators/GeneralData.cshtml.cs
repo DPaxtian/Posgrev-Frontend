@@ -12,12 +12,18 @@ namespace Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators
         public ProgramModel? programInfo;
         public Adscripciones? adscripciones;
         public string? IdProg { get; set; }
+        public string? Username { get; set; }
+        public string? EvaluationPeriod { get; set; }
+        public string? FolderId { get; set; }
+        public string? GeneralDataFolder {get; set;}
 
-        public async Task<IActionResult> OnGetAsync(string idProgram)
+        public async Task<IActionResult> OnGetAsync(string idProgram, string username, string evaluationPeriod)
         {
             try
             {
                 IdProg = idProgram;
+                Username = username;
+                EvaluationPeriod = evaluationPeriod;
                 programInfo = await ProgramLogic.GetProgramDetails(IdProg);
                 adscripciones = await ProgramLogic.GetAdscriptions();
 
@@ -28,11 +34,14 @@ namespace Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There is an error on AdministratorPage" + ex);
+                return RedirectToPage("/Error");
             }
 
             if (statusCode == 200)
             {
+                DriveLogic driveLogic = new DriveLogic();
+                FolderId = driveLogic.CreateFolder(programInfo.DatosGenerales.Denominacion, EvaluationPeriod);
+                GeneralDataFolder = driveLogic.CreateIndicatorFolder(FolderId, "Datos Generales del Programa");
                 return Page();
             }
             else
@@ -43,43 +52,70 @@ namespace Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators
         }
 
 
-        public async Task<IActionResult> OnPost(string idProgram, DatosGenerales newGeneralDataInformation)
+        public async Task<IActionResult> OnPost(string idProgram, string Username, DatosGenerales newGeneralDataInformation, string status, string CategoryFolderId, string ParentFolderId)
         {
-
-            newGeneralDataInformation.Antecedentes = new Antecedentes
+            try
             {
-                FechaAprobacion = Request.Form["DatosGenerales.Antecedentes.FechaAprobacion"],
-                InicioAct = Request.Form["DatosGenerales.Antecedentes.InicioAct"]
-            };
+                newGeneralDataInformation.Antecedentes = new Antecedentes
+                {
+                    FechaAprobacion = Request.Form["DatosGenerales.Antecedentes.FechaAprobacion"],
+                    InicioAct = Request.Form["DatosGenerales.Antecedentes.InicioAct"]
+                };
 
-            newGeneralDataInformation.Adsreg = new Adsreg
-            {
-                Adscripcion = Request.Form["DatosGenerales.Adsreg.Adscripcion"],
-                Region = Request.Form["DatosGenerales.Adsreg.Region"]
-            };
+                newGeneralDataInformation.Adsreg = new Adsreg
+                {
+                    Adscripcion = Request.Form["DatosGenerales.Adsreg.Adscripcion"],
+                    Region = Request.Form["DatosGenerales.Adsreg.Region"]
+                };
 
 
-            var pronacesValues = Request.Form["pronaces"];
+                var pronacesValues = Request.Form["pronaces"];
+                if (pronacesValues.Count > 0)
+                {
+                    newGeneralDataInformation.Pronaces = pronacesValues.ToList();
+                }
+                else
+                {
+                    newGeneralDataInformation.Pronaces = new List<string>();
+                }
 
-            if (pronacesValues.Count > 0)
-            {
-                newGeneralDataInformation.Pronaces = pronacesValues.ToList();
+                newGeneralDataInformation.RegistroProfesiones = await UploadFileToDrive(Request.Form.Files["RegistroProfesiones"], "RegistroProfesiones", CategoryFolderId, "application/pdf");
+                newGeneralDataInformation.CuotaRecuperacion = await UploadFileToDrive(Request.Form.Files["CuotaRecuperacion"], "CuotaRecuperacion", CategoryFolderId, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+
+                statusCode = await ProgramLogic.SaveGeneralData(idProgram, newGeneralDataInformation, status);
+
+                if (statusCode == 200)
+                {
+                    return RedirectToPage("/CoordinatorPages/ProgramIndicators/ContextProgram", new { idProgram, Username, ParentFolderId });
+                }
+                else
+                {
+                    return RedirectToPage("/Error");
+                }
             }
-            else
-            {
-                newGeneralDataInformation.Pronaces = new List<string>();
-            }
-
-            statusCode = await ProgramLogic.SaveGeneralData(idProgram, newGeneralDataInformation);
-
-            if (statusCode == 200)
-            {
-                return RedirectToPage("/CoordinatorPages/ProgramIndicators/ContextProgram", new {idProgram});
-            }
-            else
+            catch (Exception ex)
             {
                 return RedirectToPage("/Error");
             }
         }
+
+
+        private async Task<string> UploadFileToDrive(IFormFile file, string fileName, string folderId, string mimeType)
+        {
+            string fileId = "";
+            if (file != null && file.Length > 0)
+            {
+                using (var stream = file.OpenReadStream())
+                {
+                    DriveLogic driveLogic = new DriveLogic();
+                    fileId = await driveLogic.UploadFile(stream, fileName, mimeType, folderId);
+                }
+            }
+
+            return fileId;
+        }
+
+
     }
 }

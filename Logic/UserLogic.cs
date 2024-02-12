@@ -224,6 +224,38 @@ namespace Posgrev_Frontend.Logic
 
             return userObtained;
         }
+
+
+        public static async Task<DatosUsuario> GetUserDetailsByUsername(string username)
+        {
+            DatosUsuario userObtained = null;
+
+            try
+            {
+                using (HttpClient server = new HttpClient())
+                {
+                    string url = "http://localhost:4000/getUserByUsername/" + username;
+                    HttpResponseMessage responseMessage = await server.GetAsync(url);
+
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+                        userObtained = JsonConvert.DeserializeObject<DatosUsuario>(jsonResponse);
+
+                        // Imprime los datos para verificar
+                        Console.WriteLine($"User ID: {userObtained.IDusuario}, Nombre: {userObtained.nombreUsuario}, Rol: {userObtained.rol}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There is an error at GetUserDetails" + ex);
+            }
+
+            return userObtained;
+        }
+
+
         public static async Task<string?> GetRole(string nombreUsuario)
         {
             try

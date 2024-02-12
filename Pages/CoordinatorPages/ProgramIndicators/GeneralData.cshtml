@@ -1,6 +1,4 @@
 @page
-@using Azure.Storage.Blobs;
-@inject BlobServiceClient blobService
 @model Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators.GeneralDataModel
 @{
     ViewData["Title"] = "Datos Generales - Posgrev";
@@ -86,8 +84,11 @@
 
 
         <h5 class="mt-5 mb-3">Datos Generales del Programa</h5>
-        <form class="shadow" id="generalData" method="post">
+        <form class="shadow" id="generalData" enctype="multipart/form-data" method="post">
             <input type="hidden" name="idProgram" value="@Model.IdProg" />
+            <input type="hidden" name="Username" value="@Model.Username" />
+            <input type="hidden" name="CategoryFolderId" value="@Model.GeneralDataFolder" />
+            <input type="hidden" name="ParentFolderId" value="@Model.FolderId" />
 
             <div class="ms-3 me-3">
                 <p>Denominación:</p>
@@ -184,7 +185,7 @@
                     Tamaño maximo 20 MB
                 </h6>
 
-                <input class="form-control form-control-sm" name="RegistroProfesiones" id="formFileSm" type="file"
+                <input class="form-control form-control-sm" name="RegistroProfesiones" id="RegistroProfesiones" type="file" accept="application/pdf"
                     required>
                 
             </div>
@@ -234,7 +235,7 @@
                     Adjuntar archivo EXCEL <br>
                     Tamaño maximo 20 MB
                 </h6>
-                <input class="form-control form-control-sm" name="CuotaRecuperacion" id="formFileSm" type="file"
+                <input class="form-control form-control-sm" name="CuotaRecuperacion" id="formFileSm" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                     required>
             </div>
 
@@ -284,11 +285,12 @@
             </div>
 
             <div class="d-flex justify-content-end me-3">
-                <button type="button" class="btn btn-secondary me-2 mb-4" style="width: 200px;">
+                <input type="hidden" name="status" id="status" value="" />
+                <button type="button" class="btn btn-secondary me-2 mb-4" style="width: 200px;" onclick="saveData('Borrador')">
                     Guardar como borrador
                 </button>
 
-                <button type="submit" class="btn btn-primary shadow mb-4" style="width: 250px;">
+                <button type="button" class="btn btn-primary shadow mb-4" style="width: 250px;" onclick="saveData('Completado')">
                     Siguiente
                 </button>
             </div>
@@ -298,3 +300,11 @@
     </div>
 
 </div>
+
+
+<script>
+    function saveData(status) {
+        document.getElementById('status').value = status;
+        document.getElementById('generalData').submit();
+    }
+</script>
