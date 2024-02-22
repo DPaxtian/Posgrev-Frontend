@@ -42,7 +42,7 @@ namespace Posgrev_Frontend.Pages
                         }
                         else if (userRole.Equals("Revisor", StringComparison.OrdinalIgnoreCase))
                         {
-                            return RedirectToPage("/RevisorPages/Nombrede la pagina");
+                            return RedirectToPage("/EvaluatorPages/EvaluatorHome");
                         }
                         else if (userRole.Equals("Coordinador", StringComparison.OrdinalIgnoreCase))
                         {
