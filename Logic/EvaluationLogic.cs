@@ -24,7 +24,7 @@ namespace Posgrev_Frontend.Logic
                 string dataToSend = JsonConvert.SerializeObject(data);
 
                 HttpClient server = new HttpClient();
-                string url = "http://localhost:3000/createEvaluationPeriod";
+                string url = "https://posgrev-backend-programs-krau.onrender.com/createEvaluationPeriod";
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PostAsync(url, contentToSend);
 
@@ -49,7 +49,7 @@ namespace Posgrev_Frontend.Logic
             try
             {
                 HttpClient server = new HttpClient();
-                string apiUrl = "http://localhost:3000/getAllEvaluationPeriods";
+                string apiUrl = "https://posgrev-backend-programs-krau.onrender.com/getAllEvaluationPeriods";
                 HttpResponseMessage responseMessage = await server.GetAsync(apiUrl);
                 string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
 

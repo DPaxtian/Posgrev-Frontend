@@ -179,7 +179,7 @@
     function addEvaluationPeriodExtension(identifier) {
         const succesfullToast = new bootstrap.Toast(document.getElementById('succesfullToast'));
 
-        fetch(`http://localhost:3000/addPeriodExtension/${identifier}`, {
+        fetch(`https://posgrev-backend-programs-krau.onrender.com/addPeriodExtension/${identifier}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -220,7 +220,7 @@
     function deleteEvaluationPeriod(identifier) {
         const succesfullToast = new bootstrap.Toast(document.getElementById('succesfullToast'));
 
-        fetch(`http://localhost:3000/deleteEvaluationPeriod/${identifier}`, {
+        fetch(`https://posgrev-backend-programs-krau.onrender.com/deleteEvaluationPeriod/${identifier}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -264,7 +264,7 @@
         const editModal = new bootstrap.Modal(document.getElementById('editEvaluationPeriodModal'));
 
         // Lógica para obtener información del periodo de evaluación utilizando una solicitud al servidor
-        fetch(`http://localhost:3000/getEvaluationPeriodById/${identifier}`)
+        fetch(`https://posgrev-backend-programs-krau.onrender.com/getEvaluationPeriodById/${identifier}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al obtener datos del periodo de evaluación');
@@ -307,7 +307,7 @@
         const endDate = document.getElementById('editEndDate').value;
 
         console.log(idPeriod)
-        fetch(`http://localhost:3000/editEvaluationPeriod/${idPeriod}`, {
+        fetch(`https://posgrev-backend-programs-krau.onrender.com/editEvaluationPeriod/${idPeriod}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

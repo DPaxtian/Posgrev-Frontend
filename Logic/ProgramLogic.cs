@@ -15,7 +15,7 @@ namespace Posgrev_Frontend.Logic
             try
             {
                 HttpClient server = new HttpClient();
-                string apiUrl = "http://localhost:3000/getAllPrograms";
+                string apiUrl = "https://posgrev-backend-programs-krau.onrender.com/getAllPrograms";
                 HttpResponseMessage responseMessage = await server.GetAsync(apiUrl);
                 string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
 
@@ -64,7 +64,7 @@ namespace Posgrev_Frontend.Logic
                 string dataToSend = JsonConvert.SerializeObject(data);
 
                 HttpClient server = new HttpClient();
-                string url = "http://localhost:3000/createProgram";
+                string url = "https://posgrev-backend-programs-krau.onrender.com/createProgram";
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PostAsync(url, contentToSend);
 
@@ -80,6 +80,41 @@ namespace Posgrev_Frontend.Logic
 
             return statusCode;
         }
+
+
+        public static async Task<int> CreateProgramIndicator(string idProgram, string evaluationPeriod)
+        {
+            int statusCode = 500;
+
+            try
+            {
+                var information = new
+                {
+                    identificadorPrograma = idProgram,
+                    periodoEvaluacion = evaluationPeriod
+                };
+
+
+                string dataToSend = JsonConvert.SerializeObject(information);
+
+                HttpClient server = new HttpClient();
+                string url = "https://posgrev-backend-programs-krau.onrender.com/createProgramIndicator";
+                HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await server.PostAsync(url, contentToSend);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    statusCode = 200;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an error creating the program" + ex);
+            }
+
+            return statusCode;
+        }
+
 
 
         public static async Task<int> EditProgram(string idUser, ProgramModel editedInformation)
@@ -113,7 +148,7 @@ namespace Posgrev_Frontend.Logic
                 string dataToSend = JsonConvert.SerializeObject(data);
 
                 HttpClient server = new HttpClient();
-                string url = "http://localhost:3000/modifyProgram/" + editedInformation.IdentificadorPrograma;
+                string url = "https://posgrev-backend-programs-krau.onrender.com/modifyProgram/" + editedInformation.IdentificadorPrograma;
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PutAsync(url, contentToSend);
 
@@ -139,7 +174,7 @@ namespace Posgrev_Frontend.Logic
             try
             {
                 HttpClient server = new HttpClient();
-                string url = "http://localhost:3000/getProgramDetails/" + idProgram;
+                string url = "https://posgrev-backend-programs-krau.onrender.com/getProgramDetails/" + idProgram;
                 HttpResponseMessage message = await server.GetAsync(url);
                 string jsonResponse = await message.Content.ReadAsStringAsync();
 
@@ -186,7 +221,7 @@ namespace Posgrev_Frontend.Logic
                 string dataToSend = JsonConvert.SerializeObject(generalInformation);
 
                 HttpClient server = new HttpClient();
-                string url = "http://localhost:3000/saveGeneralData/" + idProgram;
+                string url = "https://posgrev-backend-programs-krau.onrender.com/saveGeneralData/" + idProgram;
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
 
@@ -222,7 +257,7 @@ namespace Posgrev_Frontend.Logic
                 string dataToSend = JsonConvert.SerializeObject(generalInformation);
 
                 HttpClient server = new HttpClient();
-                string url = "http://localhost:3000/saveProgramContext/" + idProgram;
+                string url = "https://posgrev-backend-programs-krau.onrender.com/saveProgramContext/" + idProgram;
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
 
@@ -266,7 +301,7 @@ namespace Posgrev_Frontend.Logic
                 string dataToSend = JsonConvert.SerializeObject(programInfrastucture);
 
                 HttpClient server = new HttpClient();
-                string url = "http://localhost:3000/saveProgramInfrastucture/" + idProgram;
+                string url = "https://posgrev-backend-programs-krau.onrender.com/saveProgramInfrastucture/" + idProgram;
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
 
@@ -307,7 +342,7 @@ namespace Posgrev_Frontend.Logic
                 string dataToSend = JsonConvert.SerializeObject(scholarProcess);
 
                 HttpClient server = new HttpClient();
-                string url = "http://localhost:3000/saveScholarProcess/" + idProgram;
+                string url = "https://posgrev-backend-programs-krau.onrender.com/saveScholarProcess/" + idProgram;
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
 
@@ -359,7 +394,7 @@ namespace Posgrev_Frontend.Logic
                 Console.WriteLine(dataToSend);
 
                 HttpClient server = new HttpClient();
-                string url = "http://localhost:3000/saveStudentInfo/" + idProgram;
+                string url = "https://posgrev-backend-programs-krau.onrender.com/saveStudentInfo/" + idProgram;
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
 
@@ -397,7 +432,7 @@ namespace Posgrev_Frontend.Logic
                 Console.WriteLine(dataToSend);
 
                 HttpClient server = new HttpClient();
-                string url = "http://localhost:3000/saveResults/" + idProgram;
+                string url = "https://posgrev-backend-programs-krau.onrender.com/saveResults/" + idProgram;
                 HttpContent contentToSend = new StringContent(dataToSend, Encoding.UTF8, "application/json");
                 HttpResponseMessage responseMessage = await server.PatchAsync(url, contentToSend);
 
@@ -422,7 +457,7 @@ namespace Posgrev_Frontend.Logic
             try
             {
                 HttpClient server = new HttpClient();
-                string apiUrl = "http://localhost:3000/getDenominations";
+                string apiUrl = "https://posgrev-backend-programs-krau.onrender.com/getDenominations";
                 HttpResponseMessage responseMessage = await server.GetAsync(apiUrl);
                 string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
 
@@ -449,7 +484,7 @@ namespace Posgrev_Frontend.Logic
             try
             {
                 HttpClient server = new HttpClient();
-                string apiUrl = "http://localhost:3000/getAdscriptions";
+                string apiUrl = "https://posgrev-backend-programs-krau.onrender.com/getAdscriptions";
                 HttpResponseMessage responseMessage = await server.GetAsync(apiUrl);
                 string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
 

@@ -15,7 +15,7 @@ namespace Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators
         public string? Username { get; set; }
         public string? EvaluationPeriod { get; set; }
         public string? FolderId { get; set; }
-        public string? GeneralDataFolder {get; set;}
+        public string? GeneralDataFolder { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string idProgram, string username, string evaluationPeriod)
         {
@@ -31,23 +31,28 @@ namespace Posgrev_Frontend.Pages.CoordinatorPages.ProgramIndicators
                 {
                     statusCode = 200;
                 }
+
+                if (statusCode == 200)
+                {
+                    await ProgramLogic.CreateProgramIndicator(IdProg, EvaluationPeriod);
+
+                    DriveLogic driveLogic = new DriveLogic();
+                    FolderId = driveLogic.CreateFolder(programInfo.InformacionBasica.NombrePrograma, EvaluationPeriod);
+                    GeneralDataFolder = driveLogic.CreateIndicatorFolder(FolderId, "Datos Generales del Programa");
+                    return Page();
+                }
+                else
+                {
+                    return RedirectToPage("/Error");
+                }
             }
             catch (Exception ex)
             {
+                Console.WriteLine("An error has been ocurred in GeneralData" + ex);
                 return RedirectToPage("/Error");
             }
 
-            if (statusCode == 200)
-            {
-                DriveLogic driveLogic = new DriveLogic();
-                FolderId = driveLogic.CreateFolder(programInfo.DatosGenerales.Denominacion, EvaluationPeriod);
-                GeneralDataFolder = driveLogic.CreateIndicatorFolder(FolderId, "Datos Generales del Programa");
-                return Page();
-            }
-            else
-            {
-                return RedirectToPage("/Error");
-            }
+
 
         }
 

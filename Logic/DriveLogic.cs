@@ -11,18 +11,72 @@ namespace Posgrev_Frontend.Logic
 {
     public class DriveLogic
     {
+        // private static DriveService GetService()
+        // {
+        //     var tokenResponse = new TokenResponse
+        //     {
+        //         AccessToken = "ya29.a0AfB_byCoe_Sl8FTdGcjA4GQq1HIz5XHCF3KiE-QNovg5kh6cQoGWRwILf8gEdKx8sKYqAb3ld5kc5EF-p9D1P5DUmVo6mw_GVcQCFKqQT1-ky5QwwfPELavefuRhB90EUKBf7Rmi5qW7piEbqqlYD-ZjSStafGZ5sTjkaCgYKAT0SARMSFQHGX2MitkE-ZIs-F7lWg_qzU3G2fQ0171",
+        //         RefreshToken = "1//04MAXn1_QkCXGCgYIARAAGAQSNwF-L9IrQ39sBDBBgWx48e-V84ny3c41qvc-Qt28kHEHDWpmCaqWAqZKJ6bY6wB0QU7o-SBtwb4",
+        //     };
+
+
+        //     var applicationName = "Posgrev Files"; // Use the name of the project in Google Cloud
+        //     var username = "posgrev@gmail.com"; // Use your email
+
+
+        //     var apiCodeFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
+        //     {
+        //         ClientSecrets = new ClientSecrets
+        //         {
+        //             ClientId = "799200777765-d2hrcp5r48u157r4grnfb96b10e22huu.apps.googleusercontent.com",
+        //             ClientSecret = "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"
+        //         },
+        //         Scopes = new[] { Scope.Drive },
+        //         DataStore = new FileDataStore(applicationName)
+        //     });
+
+
+        //     var credential = new UserCredential(apiCodeFlow, username, tokenResponse);
+
+
+        //     var service = new DriveService(new BaseClientService.Initializer
+        //     {
+        //         HttpClientInitializer = credential,
+        //         ApplicationName = applicationName
+        //     });
+        //     return service;
+        // }
+
+
+        private static UserCredential credential;
+
         private static DriveService GetService()
+        {
+            if (credential == null || credential.Token.IsExpired(Google.Apis.Util.SystemClock.Default))
+            {
+                // Si el token aún no está inicializado o está vencido, obtener uno nuevo
+                credential = GetRefreshedCredential();
+            }
+
+            var applicationName = "Posgrev Files"; // Usar el nombre del proyecto en Google Cloud
+
+            var service = new DriveService(new BaseClientService.Initializer
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = applicationName
+            });
+
+            return service;
+        }
+
+
+        private static UserCredential GetRefreshedCredential()
         {
             var tokenResponse = new TokenResponse
             {
-                AccessToken = "ya29.a0AfB_byCoe_Sl8FTdGcjA4GQq1HIz5XHCF3KiE-QNovg5kh6cQoGWRwILf8gEdKx8sKYqAb3ld5kc5EF-p9D1P5DUmVo6mw_GVcQCFKqQT1-ky5QwwfPELavefuRhB90EUKBf7Rmi5qW7piEbqqlYD-ZjSStafGZ5sTjkaCgYKAT0SARMSFQHGX2MitkE-ZIs-F7lWg_qzU3G2fQ0171",
-                RefreshToken = "1//04MAXn1_QkCXGCgYIARAAGAQSNwF-L9IrQ39sBDBBgWx48e-V84ny3c41qvc-Qt28kHEHDWpmCaqWAqZKJ6bY6wB0QU7o-SBtwb4",
+                AccessToken = "ya29.a0AfB_byBjK14jT-4MfvIkvmJm01rsdlUxc808ZVAEWFiPA1lEl9yHxwYRIz1344vCku_PklpmeNrXJM76RVuxXk2hAtQSM_S-6kpiAiv66kvMN35bZY5grj0RcQ9Q71cH-0_YOd3oM6ipP58LTRVBVO-w0Unb03YV4t8VaCgYKAT0SARMSFQHGX2Mir8JSMuvFhfNgogfGl9duMw0171",
+                RefreshToken = "1//04KDIF2UY2HS_CgYIARAAGAQSNwF-L9IrybEvwXNOCF9oznaXNvoj3Lo0AFILzoIePYs9QfIFFRa6_Y_7sKj2ACMki-c9Oi8Uctk"
             };
-
-
-            var applicationName = "Posgrev Files"; // Use the name of the project in Google Cloud
-            var username = "posgrev@gmail.com"; // Use your email
-
 
             var apiCodeFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
             {
@@ -32,19 +86,10 @@ namespace Posgrev_Frontend.Logic
                     ClientSecret = "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"
                 },
                 Scopes = new[] { Scope.Drive },
-                DataStore = new FileDataStore(applicationName)
+                DataStore = new FileDataStore("Posgrev_Files")
             });
 
-
-            var credential = new UserCredential(apiCodeFlow, username, tokenResponse);
-
-
-            var service = new DriveService(new BaseClientService.Initializer
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = applicationName
-            });
-            return service;
+            return new UserCredential(apiCodeFlow, "posgrev@gmail.com", tokenResponse);
         }
 
 
